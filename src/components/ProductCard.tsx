@@ -1,57 +1,39 @@
 import { motion } from "framer-motion";
-import { Heart, ShoppingBag } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface ProductCardProps {
-  id: number;
   name: string;
   price: number;
-  originalPrice?: number;
   image: string;
-  category: string;
-  isNew?: boolean;
-  isBestseller?: boolean;
+  badge?: "bestseller" | "new";
+  stock: "in-stock" | "limited" | "out-of-stock";
 }
 
-const ProductCard = ({
-  name,
-  price,
-  originalPrice,
-  image,
-  category,
-  isNew,
-  isBestseller,
-}: ProductCardProps) => {
+const ProductCard = ({ name, price, image, badge, stock }: ProductCardProps) => {
+  const stockLabels = {
+    "in-stock": { text: "În stoc", color: "text-sage-green" },
+    "limited": { text: "Stoc limitat", color: "text-primary" },
+    "out-of-stock": { text: "Indisponibil", color: "text-muted-foreground" },
+  };
+
+  const badgeLabels = {
+    bestseller: { text: "Cel mai vândut", bg: "bg-primary" },
+    new: { text: "Nou", bg: "bg-sage-green" },
+  };
+
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="group relative bg-card rounded-2xl overflow-hidden shadow-soft"
+      className="group bg-card rounded-2xl overflow-hidden shadow-soft"
     >
-      {/* Badges */}
-      <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-        {isNew && (
-          <span className="inline-block px-3 py-1 bg-secondary text-secondary-foreground text-xs font-medium rounded-full">
-            Nou
+      {/* Image Container */}
+      <div className="relative aspect-square overflow-hidden bg-muted">
+        {badge && (
+          <span
+            className={`absolute top-4 left-4 z-10 px-3 py-1.5 ${badgeLabels[badge].bg} text-primary-foreground text-xs font-medium rounded-full`}
+          >
+            {badgeLabels[badge].text}
           </span>
         )}
-        {isBestseller && (
-          <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
-            Bestseller
-          </span>
-        )}
-      </div>
-
-      {/* Wishlist Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-4 right-4 z-10 w-9 h-9 bg-card/80 backdrop-blur-sm hover:bg-card rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      >
-        <Heart className="w-4 h-4 text-muted-foreground" />
-      </Button>
-
-      {/* Image */}
-      <div className="aspect-square overflow-hidden bg-muted">
         <img
           src={image}
           alt={name}
@@ -60,31 +42,16 @@ const ProductCard = ({
       </div>
 
       {/* Content */}
-      <div className="p-4 lg:p-5">
-        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          {category}
-        </span>
-        <h3 className="font-display text-lg font-medium text-foreground mt-1 mb-2 line-clamp-1">
+      <div className="p-5">
+        <h3 className="font-display text-lg font-medium text-foreground mb-2 line-clamp-1">
           {name}
         </h3>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold text-foreground">
-              {price.toFixed(2)} RON
-            </span>
-            {originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                {originalPrice.toFixed(2)} RON
-              </span>
-            )}
-          </div>
-          <Button
-            size="icon"
-            className="w-9 h-9 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground"
-          >
-            <ShoppingBag className="w-4 h-4" />
-          </Button>
-        </div>
+        <p className="text-lg font-semibold text-foreground mb-1">
+          €{price.toFixed(2)}
+        </p>
+        <p className={`text-sm ${stockLabels[stock].color}`}>
+          {stockLabels[stock].text}
+        </p>
       </div>
     </motion.div>
   );

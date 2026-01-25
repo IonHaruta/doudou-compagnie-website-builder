@@ -1,41 +1,39 @@
 import { motion } from "framer-motion";
-import { Facebook, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { Facebook, Instagram, MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     magazin: [
-      { name: "Jucării de Pluș", href: "#" },
-      { name: "Pături & Accesorii", href: "#" },
-      { name: "Cutii Cadou", href: "#" },
+      { name: "Toate Produsele", href: "#" },
       { name: "Noutăți", href: "#" },
+      { name: "Bestseller-uri", href: "#" },
       { name: "Oferte Speciale", href: "#" },
     ],
-    informatii: [
-      { name: "Despre Noi", href: "#about" },
-      { name: "Livrare & Returnare", href: "#" },
+    colectii: [
+      { name: "Boh'aime", href: "#" },
+      { name: "Iepuraș Floricică", href: "#" },
+      { name: "Marionetele", href: "#" },
+      { name: "Cutii Muzicale", href: "#" },
+    ],
+    ajutor: [
+      { name: "Contact", href: "#" },
+      { name: "Livrare", href: "#" },
+      { name: "Returnări", href: "#" },
       { name: "FAQ", href: "#" },
-      { name: "Contact", href: "#contact" },
-      { name: "Blog", href: "#" },
     ],
     legal: [
       { name: "Termeni și Condiții", href: "#" },
-      { name: "Politica de Confidențialitate", href: "#" },
-      { name: "Politica de Cookies", href: "#" },
+      { name: "Confidențialitate", href: "#" },
+      { name: "Cookies", href: "#" },
     ],
   };
 
-  const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Youtube, href: "#", label: "Youtube" },
-  ];
-
   return (
     <footer id="contact" className="bg-foreground text-card">
-      <div className="container mx-auto px-4 lg:px-8 py-16 lg:py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+      <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
             <motion.div
@@ -44,132 +42,109 @@ const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-display text-2xl font-semibold mb-4">
+              <h3 className="font-display text-2xl font-medium italic mb-4">
                 Doudou & Compagnie
               </h3>
-              <p className="text-card/70 mb-6 max-w-sm leading-relaxed">
-                Creăm jucării premium pentru bebeluși din 1974. 
-                Calitate franceză și dragoste pentru cei mici.
+              <p className="text-card/70 mb-6 text-sm leading-relaxed">
+                Creatori de momente tandre din 1999. Jucării premium pentru bebeluși, 
+                fabricate cu dragoste în Franța.
               </p>
 
-              {/* Contact Info */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-card/70">
-                  <MapPin className="w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm">București, România</span>
+              {/* Contact */}
+              <div className="space-y-2 mb-6">
+                <div className="flex items-center gap-2 text-card/70 text-sm">
+                  <MapPin className="w-4 h-4 flex-shrink-0" />
+                  <span>București, România</span>
                 </div>
-                <div className="flex items-center gap-3 text-card/70">
-                  <Phone className="w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm">+40 123 456 789</span>
+                <div className="flex items-center gap-2 text-card/70 text-sm">
+                  <Phone className="w-4 h-4 flex-shrink-0" />
+                  <span>+40 123 456 789</span>
                 </div>
-                <div className="flex items-center gap-3 text-card/70">
-                  <Mail className="w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm">contact@doudou-ro.com</span>
+                <div className="flex items-center gap-2 text-card/70 text-sm">
+                  <Mail className="w-4 h-4 flex-shrink-0" />
+                  <span>contact@doudou.ro</span>
                 </div>
               </div>
 
-              {/* Social Links */}
-              <div className="flex gap-4 mt-6">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    aria-label={social.label}
-                    className="w-10 h-10 rounded-full bg-card/10 hover:bg-card/20 flex items-center justify-center transition-colors"
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </a>
-                ))}
+              {/* Social */}
+              <div className="flex gap-3">
+                <a
+                  href="#"
+                  className="w-9 h-9 rounded-full bg-card/10 hover:bg-card/20 flex items-center justify-center transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="#"
+                  className="w-9 h-9 rounded-full bg-card/10 hover:bg-card/20 flex items-center justify-center transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
               </div>
             </motion.div>
           </div>
 
           {/* Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h4 className="font-semibold mb-4">Magazin</h4>
-            <ul className="space-y-3">
+          <div>
+            <h4 className="font-medium mb-4 text-sm">Magazin</h4>
+            <ul className="space-y-2">
               {footerLinks.magazin.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-card/70 hover:text-card transition-colors"
-                  >
+                  <a href={link.href} className="text-sm text-card/70 hover:text-card transition-colors">
                     {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 className="font-semibold mb-4">Informații</h4>
-            <ul className="space-y-3">
-              {footerLinks.informatii.map((link) => (
+          <div>
+            <h4 className="font-medium mb-4 text-sm">Colecții</h4>
+            <ul className="space-y-2">
+              {footerLinks.colectii.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-card/70 hover:text-card transition-colors"
-                  >
+                  <a href={link.href} className="text-sm text-card/70 hover:text-card transition-colors">
                     {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-3">
+          <div>
+            <h4 className="font-medium mb-4 text-sm">Ajutor</h4>
+            <ul className="space-y-2">
+              {footerLinks.ajutor.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-sm text-card/70 hover:text-card transition-colors">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-medium mb-4 text-sm">Legal</h4>
+            <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-card/70 hover:text-card transition-colors"
-                  >
+                  <a href={link.href} className="text-sm text-card/70 hover:text-card transition-colors">
                     {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-card/10">
-        <div className="container mx-auto px-4 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-card/60">
-              © {currentYear} Doudou & Compagnie. Toate drepturile rezervate.
-            </p>
-            <div className="flex items-center gap-4">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png"
-                alt="Visa"
-                className="h-6 opacity-60"
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png"
-                alt="Mastercard"
-                className="h-6 opacity-60"
-              />
-            </div>
-          </div>
+        <div className="container mx-auto px-4 lg:px-8 py-4">
+          <p className="text-xs text-card/50 text-center">
+            © {currentYear} Doudou & Compagnie. Toate drepturile rezervate.
+          </p>
         </div>
       </div>
     </footer>
