@@ -42,8 +42,8 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation - visible from md breakpoint */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {/* Shop Dropdown */}
             <div 
               className="relative"
@@ -101,10 +101,10 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="hidden lg:flex text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="icon" className="hidden md:flex text-muted-foreground hover:text-foreground">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="hidden lg:flex text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="icon" className="hidden md:flex text-muted-foreground hover:text-foreground">
               <User className="h-5 w-5" />
             </Button>
             <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
@@ -118,7 +118,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden text-muted-foreground hover:text-foreground"
+              className="md:hidden text-muted-foreground hover:text-foreground"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? (
@@ -139,7 +139,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-background border-t border-border"
+            className="md:hidden bg-background border-t border-border"
           >
             <div className="container mx-auto px-4 py-4 space-y-2">
               {/* Shop with submenu */}
