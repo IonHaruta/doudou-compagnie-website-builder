@@ -1,17 +1,20 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-nursery.jpg";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image */}
+      {/* Background Image with Light Overlay */}
       <div className="absolute inset-0">
         <img
           src={heroImage}
           alt="Doudou & Compagnie - Camera bebelușului"
           className="w-full h-full object-cover"
         />
+        {/* Light warm overlay for soft effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cream/70 via-cream/40 to-transparent" />
       </div>
 
       {/* Content */}
@@ -42,17 +45,19 @@ const Hero = () => {
             className="flex flex-wrap gap-4"
           >
             <Button 
+              asChild
               size="lg" 
               className="text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
             >
-              Descoperă Colecția
+              <Link to="/magazin">Descoperă Colecția</Link>
             </Button>
             <Button 
+              asChild
               variant="outline" 
               size="lg" 
               className="text-base px-8 py-6 border-primary text-primary hover:bg-primary/5 rounded-full"
             >
-              Colecții
+              <Link to="/colectii">Colecții</Link>
             </Button>
           </motion.div>
         </div>

@@ -1,19 +1,30 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingBag, Menu, X, User } from "lucide-react";
+import { Search, ShoppingBag, Menu, X, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
+
+const shopCategories = [
+  { name: "Noutăți", href: "/magazin?filter=new" },
+  { name: "Cele mai vândute", href: "/magazin?filter=bestseller" },
+  { name: "Doudous", href: "/magazin?filter=doudous" },
+  { name: "Jucării de Pluș", href: "/magazin?filter=plush" },
+  { name: "Marionete", href: "/magazin?filter=puppets" },
+  { name: "Cutii Muzicale", href: "/magazin?filter=music-boxes" },
+];
+
+const navLinks = [
+  { name: "Colecții", href: "/colectii" },
+  { name: "Idei Cadouri", href: "/idei-cadouri" },
+  { name: "Povestea Noastră", href: "/povestea-noastra" },
+  { name: "Ajutor", href: "/ajutor" },
+];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
   const [cartCount] = useState(2);
-
-  const navLinks = [
-    { name: "Magazin", href: "#products" },
-    { name: "Colecții", href: "#collections" },
-    { name: "Idei Cadouri", href: "#gift-finder" },
-    { name: "Povestea Noastră", href: "#about" },
-    { name: "Ajutor", href: "#contact" },
-  ];
+  const location = useLocation();
 
   return (
     <motion.nav
@@ -25,22 +36,66 @@ const Navbar = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <span className="font-display text-xl lg:text-2xl font-medium text-foreground italic">
               Doudou & Compagnie
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
+            {/* Shop Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsShopOpen(true)}
+              onMouseLeave={() => setIsShopOpen(false)}
+            >
+              <button
+                className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
+                  location.pathname.startsWith('/magazin') 
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                Magazin
+                <ChevronDown className={`w-4 h-4 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              <AnimatePresence>
+                {isShopOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full left-0 mt-2 w-48 bg-background rounded-xl shadow-lg border border-border py-2 z-50"
+                  >
+                    {shopCategories.map((category) => (
+                      <Link
+                        key={category.name}
+                        to={category.href}
+                        className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                to={link.href}
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  location.pathname === link.href 
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -86,16 +141,48 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
             className="lg:hidden bg-background border-t border-border"
           >
-            <div className="container mx-auto px-4 py-4 space-y-4">
+            <div className="container mx-auto px-4 py-4 space-y-2">
+              {/* Shop with submenu */}
+              <div className="py-2">
+                <button
+                  onClick={() => setIsShopOpen(!isShopOpen)}
+                  className="flex items-center justify-between w-full text-base font-medium text-foreground"
+                >
+                  Magazin
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {isShopOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mt-2 pl-4 space-y-2"
+                    >
+                      {shopCategories.map((category) => (
+                        <Link
+                          key={category.name}
+                          to={category.href}
+                          className="block py-2 text-sm text-muted-foreground hover:text-foreground"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {category.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   className="block text-base font-medium text-foreground py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
           </motion.div>
