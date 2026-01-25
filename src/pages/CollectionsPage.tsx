@@ -6,6 +6,9 @@ import Footer from "@/components/Footer";
 import collectionBohaime from "@/assets/collection-bohaime.jpg";
 import collectionFloricica from "@/assets/collection-floricica.jpg";
 import collectionMarionete from "@/assets/collection-marionete.jpg";
+import collectionAnniversary from "@/assets/collection-anniversary.jpg";
+import collectionClairLune from "@/assets/collection-clair-lune.jpg";
+import collectionOrganic from "@/assets/collection-organic.jpg";
 
 const collections = [
   {
@@ -34,21 +37,21 @@ const collections = [
     name: "Aniversare DOUDOU®",
     description: "Colecție specială pentru aniversarea de 25 de ani",
     count: 12,
-    image: collectionBohaime,
+    image: collectionAnniversary,
   },
   {
     id: 5,
     name: "Clair de Lune",
     description: "Doudous luminescente pentru nopți liniștite",
     count: 15,
-    image: collectionFloricica,
+    image: collectionClairLune,
   },
   {
     id: 6,
     name: "Colecția Organică",
     description: "Bumbac organic certificat, blând pentru bebeluș și planetă",
     count: 20,
-    image: collectionMarionete,
+    image: collectionOrganic,
   },
 ];
 
