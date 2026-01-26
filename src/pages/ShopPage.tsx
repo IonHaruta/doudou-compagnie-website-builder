@@ -27,6 +27,7 @@ const products = [
     stock: "in-stock" as const,
     type: "doudous",
     ageRange: "0-6",
+    color: "roz",
   },
   {
     id: 2,
@@ -37,6 +38,7 @@ const products = [
     stock: "in-stock" as const,
     type: "plush",
     ageRange: "6-12",
+    color: "gri",
   },
   {
     id: 3,
@@ -47,6 +49,7 @@ const products = [
     stock: "limited" as const,
     type: "puppets",
     ageRange: "1-3",
+    color: "gri",
   },
   {
     id: 4,
@@ -57,6 +60,7 @@ const products = [
     stock: "in-stock" as const,
     type: "music-boxes",
     ageRange: "0-6",
+    color: "bej",
   },
   {
     id: 5,
@@ -67,6 +71,7 @@ const products = [
     stock: "in-stock" as const,
     type: "doudous",
     ageRange: "0-6",
+    color: "bej",
   },
   {
     id: 6,
@@ -77,6 +82,7 @@ const products = [
     stock: "in-stock" as const,
     type: "doudous",
     ageRange: "0-6",
+    color: "roz",
   },
   {
     id: 7,
@@ -87,6 +93,7 @@ const products = [
     stock: "in-stock" as const,
     type: "plush",
     ageRange: "6-12",
+    color: "albastru",
   },
   {
     id: 8,
@@ -97,6 +104,7 @@ const products = [
     stock: "limited" as const,
     type: "doudous",
     ageRange: "3+",
+    color: "bej",
   },
   {
     id: 9,
@@ -106,6 +114,7 @@ const products = [
     stock: "in-stock" as const,
     type: "plush",
     ageRange: "1-3",
+    color: "bej",
   },
 ];
 
@@ -117,10 +126,10 @@ const productTypes = [
 ];
 
 const budgetRanges = [
-  { id: "under-20", label: "Sub €20", min: 0, max: 20 },
-  { id: "20-40", label: "€20 - €40", min: 20, max: 40 },
-  { id: "40-60", label: "€40 - €60", min: 40, max: 60 },
-  { id: "over-60", label: "Peste €60", min: 60, max: Infinity },
+  { id: "under-20", label: "<20 euro", min: 0, max: 20 },
+  { id: "20-40", label: "20-40 euro", min: 20, max: 40 },
+  { id: "40-60", label: "40-60 euro", min: 40, max: 60 },
+  { id: "over-60", label: ">60 euro", min: 60, max: Infinity },
 ];
 
 const ageRanges = [
@@ -130,12 +139,20 @@ const ageRanges = [
   { id: "3+", label: "3+ ani" },
 ];
 
+const colorOptions = [
+  { id: "roz", label: "Roz", hex: "#F8B4C0" },
+  { id: "albastru", label: "Albastru", hex: "#87CEEB" },
+  { id: "bej", label: "Bej/Crem", hex: "#D4C4A8" },
+  { id: "gri", label: "Gri", hex: "#9CA3AF" },
+];
+
 const ShopPage = () => {
   const [searchParams] = useSearchParams();
   const [gridSize, setGridSize] = useState<2 | 3 | 4>(3);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedBudgets, setSelectedBudgets] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("newest");
 
   // Apply filters from URL params (from GiftFinder)
@@ -143,10 +160,12 @@ const ShopPage = () => {
     const ageParam = searchParams.get("age");
     const typeParam = searchParams.get("type");
     const budgetParam = searchParams.get("budget");
+    const colorParam = searchParams.get("color");
 
     if (ageParam) setSelectedAges([ageParam]);
     if (typeParam) setSelectedTypes([typeParam]);
     if (budgetParam) setSelectedBudgets([budgetParam]);
+    if (colorParam) setSelectedColors([colorParam]);
   }, [searchParams]);
 
   const toggleFilter = (
@@ -185,6 +204,11 @@ const ShopPage = () => {
       result = result.filter((p) => selectedAges.includes(p.ageRange));
     }
 
+    // Filter by color
+    if (selectedColors.length > 0) {
+      result = result.filter((p) => selectedColors.includes(p.color));
+    }
+
     // Sort
     switch (sortBy) {
       case "price-asc":
@@ -203,7 +227,7 @@ const ShopPage = () => {
     }
 
     return result;
-  }, [selectedTypes, selectedBudgets, selectedAges, sortBy]);
+  }, [selectedTypes, selectedBudgets, selectedAges, selectedColors, sortBy]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -278,6 +302,26 @@ const ShopPage = () => {
                         onCheckedChange={() => toggleFilter(range.id, selectedAges, setSelectedAges)}
                       />
                       <span className="text-sm text-muted-foreground">{range.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Color */}
+              <div>
+                <h4 className="text-sm font-medium text-foreground mb-3">Culoare?</h4>
+                <div className="space-y-2">
+                  {colorOptions.map((color) => (
+                    <label key={color.id} className="flex items-center gap-2 cursor-pointer">
+                      <Checkbox
+                        checked={selectedColors.includes(color.id)}
+                        onCheckedChange={() => toggleFilter(color.id, selectedColors, setSelectedColors)}
+                      />
+                      <span 
+                        className="w-4 h-4 rounded-full border border-border" 
+                        style={{ backgroundColor: color.hex }}
+                      />
+                      <span className="text-sm text-muted-foreground">{color.label}</span>
                     </label>
                   ))}
                 </div>
