@@ -1,30 +1,33 @@
 import { motion } from "framer-motion";
 import { Award, Shield, Gift, Truck } from "lucide-react";
-
-const features = [
-  {
-    icon: Award,
-    title: "Calitate Premium",
-    description: "Materiale certificate, moi și durabile",
-  },
-  {
-    icon: Shield,
-    title: "Siguranță Bebeluș",
-    description: "Norme CE, testate și aprobate",
-  },
-  {
-    icon: Gift,
-    title: "Ambalaj Cadou",
-    description: "Ofert la cerere",
-  },
-  {
-    icon: Truck,
-    title: "Livrare Atentă",
-    description: "Expediere rapidă și urmărită",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const WhyChooseUs = () => {
+  const { t } = useLanguage();
+
+  const features = [
+    {
+      icon: Award,
+      titleKey: "why.quality",
+      descriptionKey: "why.qualityDesc",
+    },
+    {
+      icon: Shield,
+      titleKey: "why.safety",
+      descriptionKey: "why.safetyDesc",
+    },
+    {
+      icon: Gift,
+      titleKey: "why.gift",
+      descriptionKey: "why.giftDesc",
+    },
+    {
+      icon: Truck,
+      titleKey: "why.delivery",
+      descriptionKey: "why.deliveryDesc",
+    },
+  ];
+
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -37,7 +40,7 @@ const WhyChooseUs = () => {
           className="text-center mb-12"
         >
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium text-foreground">
-            De ce să ne alegi pe noi?
+            {t("why.title")}
           </h2>
         </motion.div>
 
@@ -45,7 +48,7 @@ const WhyChooseUs = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <motion.div
-              key={feature.title}
+              key={feature.titleKey}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -56,10 +59,10 @@ const WhyChooseUs = () => {
                 <feature.icon className="w-7 h-7 text-primary" />
               </div>
               <h3 className="font-display text-xl font-medium text-foreground mb-2">
-                {feature.title}
+                {t(feature.titleKey)}
               </h3>
               <p className="text-sm text-muted-foreground">
-                {feature.description}
+                {t(feature.descriptionKey)}
               </p>
             </motion.div>
           ))}

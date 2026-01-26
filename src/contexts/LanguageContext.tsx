@@ -174,15 +174,22 @@ const translations: Translations = {
   "common.results": { ro: "rezultate", ru: "результатов", en: "results" },
   
   // Why Choose Us
-  "why.title": { ro: "De Ce Doudou & Compagnie?", ru: "Почему Doudou & Compagnie?", en: "Why Doudou & Compagnie?" },
+  "why.title": { ro: "De ce să ne alegi pe noi?", ru: "Почему выбирают нас?", en: "Why Choose Us?" },
   "why.quality": { ro: "Calitate Premium", ru: "Премиум качество", en: "Premium Quality" },
-  "why.qualityDesc": { ro: "Materiale selectate cu grijă pentru pielea sensibilă", ru: "Материалы, отобранные для чувствительной кожи", en: "Materials carefully selected for sensitive skin" },
-  "why.safety": { ro: "Siguranță Certificată", ru: "Сертифицированная безопасность", en: "Certified Safety" },
-  "why.safetyDesc": { ro: "Toate produsele respectă normele CE de la 0 luni", ru: "Все продукты соответствуют нормам CE с 0 месяцев", en: "All products meet CE standards from 0 months" },
-  "why.handmade": { ro: "Design Francez", ru: "Французский дизайн", en: "French Design" },
-  "why.handmadeDesc": { ro: "Create cu dragoste în atelierele noastre din Franța", ru: "Созданы с любовью в наших мастерских во Франции", en: "Created with love in our French workshops" },
-  "why.gift": { ro: "Cadou Perfect", ru: "Идеальный подарок", en: "Perfect Gift" },
-  "why.giftDesc": { ro: "Ambalaj elegant și personalizabil pentru orice ocazie", ru: "Элегантная упаковка для любого случая", en: "Elegant packaging for any occasion" },
+  "why.qualityDesc": { ro: "Materiale certificate, moi și durabile", ru: "Сертифицированные материалы, мягкие и прочные", en: "Certified materials, soft and durable" },
+  "why.safety": { ro: "Siguranță Bebeluș", ru: "Безопасность для малыша", en: "Baby Safety" },
+  "why.safetyDesc": { ro: "Norme CE, testate și aprobate", ru: "Нормы CE, протестировано и одобрено", en: "CE standards, tested and approved" },
+  "why.gift": { ro: "Ambalaj Cadou", ru: "Подарочная упаковка", en: "Gift Wrapping" },
+  "why.giftDesc": { ro: "Oferit la cerere", ru: "Предоставляется по запросу", en: "Available upon request" },
+  "why.delivery": { ro: "Livrare Atentă", ru: "Бережная доставка", en: "Careful Delivery" },
+  "why.deliveryDesc": { ro: "Expediere rapidă și urmărită", ru: "Быстрая отслеживаемая доставка", en: "Fast tracked shipping" },
+  
+  // Footer location
+  "footer.location": { ro: "București, România", ru: "Бухарест, Румыния", en: "Bucharest, Romania" },
+  
+  // Collection names for footer
+  "collection.bohaime": { ro: "Boh'aime", ru: "Богема", en: "Boh'aime" },
+  "collection.floricica": { ro: "Iepuraș Floricică", ru: "Зайчик Цветочек", en: "Flower Bunny" },
   
   // Gift Finder
   "gift.title": { ro: "Găsește Cadoul Perfect", ru: "Найдите идеальный подарок", en: "Find the Perfect Gift" },
