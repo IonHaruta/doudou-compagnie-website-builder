@@ -14,8 +14,8 @@ const Footer = () => {
       { name: t("shop.doudous"), href: "/magazin?filter=doudous" },
     ],
     colectii: [
-      { name: "Boh'aime", href: "/colectii" },
-      { name: "Iepuraș Floricică", href: "/colectii" },
+      { name: t("collection.bohaime"), href: "/colectii" },
+      { name: t("collection.floricica"), href: "/colectii" },
       { name: t("shop.puppets"), href: "/magazin?filter=puppets" },
       { name: t("shop.musicBoxes"), href: "/magazin?filter=music-boxes" },
     ],
@@ -55,7 +55,7 @@ const Footer = () => {
               <div className="space-y-2 mb-6">
                 <div className="flex items-center gap-2 text-card/70 text-sm">
                   <MapPin className="w-4 h-4 flex-shrink-0" />
-                  <span>București, România</span>
+                  <span>{t("footer.location")}</span>
                 </div>
                 <div className="flex items-center gap-2 text-card/70 text-sm">
                   <Phone className="w-4 h-4 flex-shrink-0" />
