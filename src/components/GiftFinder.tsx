@@ -22,7 +22,7 @@ const steps = [
   {
     id: 4,
     question: "Care este bugetul?",
-    options: ["Sub €20", "€20-€30", "€30-€50", "Peste €50"],
+    options: ["<20 euro", "20-40 euro", "40-60 euro", ">60 euro"],
   },
 ];
 
@@ -42,10 +42,17 @@ const typeMapping: Record<string, string> = {
 };
 
 const budgetMapping: Record<string, string> = {
-  "Sub €20": "under-20",
-  "€20-€30": "20-40",
-  "€30-€50": "40-60",
-  "Peste €50": "over-60",
+  "<20 euro": "under-20",
+  "20-40 euro": "20-40",
+  "40-60 euro": "40-60",
+  ">60 euro": "over-60",
+};
+
+const colorMapping: Record<string, string> = {
+  "Roz": "roz",
+  "Albastru": "albastru",
+  "Bej/Crem": "bej",
+  "Multicolor": "multicolor",
 };
 
 const GiftFinder = () => {
@@ -76,6 +83,11 @@ const GiftFinder = () => {
     // Type filter (step 1)
     if (selectedOptions[1] && typeMapping[selectedOptions[1]]) {
       params.set("type", typeMapping[selectedOptions[1]]);
+    }
+    
+    // Color filter (step 2)
+    if (selectedOptions[2] && colorMapping[selectedOptions[2]]) {
+      params.set("color", colorMapping[selectedOptions[2]]);
     }
     
     // Budget filter (step 3)
