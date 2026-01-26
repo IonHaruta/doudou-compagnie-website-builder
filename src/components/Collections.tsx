@@ -1,33 +1,36 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 import collectionBohaime from "@/assets/collection-bohaime.jpg";
 import collectionFloricica from "@/assets/collection-floricica.jpg";
 import collectionMarionete from "@/assets/collection-marionete.jpg";
 
-const collections = [
-  {
-    id: 1,
-    name: "Boh'aime",
-    description: "O colecție boemă și poetică pentru visători",
-    count: "24 rezultate",
-    image: collectionBohaime,
-  },
-  {
-    id: 2,
-    name: "Iepuraș Floricică",
-    description: "Iepurași moi împodobiți cu flori delicate",
-    count: "18 rezultate",
-    image: collectionFloricica,
-  },
-  {
-    id: 3,
-    name: "Marionetele",
-    description: "Marionete pentru a spune povești magice",
-    count: "32 rezultate",
-    image: collectionMarionete,
-  },
-];
-
 const Collections = () => {
+  const { t } = useLanguage();
+
+  const collections = [
+    {
+      id: 1,
+      nameKey: "collection.bohaime",
+      descriptionKey: "collections.bohaime",
+      count: 24,
+      image: collectionBohaime,
+    },
+    {
+      id: 2,
+      nameKey: "collection.floricica",
+      descriptionKey: "collections.floricica",
+      count: 18,
+      image: collectionFloricica,
+    },
+    {
+      id: 3,
+      nameKey: "collection.marionete",
+      descriptionKey: "collections.marionete",
+      count: 32,
+      image: collectionMarionete,
+    },
+  ];
+
   return (
     <section id="collections" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -40,10 +43,10 @@ const Collections = () => {
           className="text-center mb-12"
         >
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium text-foreground italic mb-4">
-            Colecții
+            {t("collections.title")}
           </h2>
           <p className="text-muted-foreground">
-            Explorați universurile noastre fermecate
+            {t("collections.subtitle")}
           </p>
         </motion.div>
 
@@ -62,7 +65,7 @@ const Collections = () => {
               {/* Image */}
               <img
                 src={collection.image}
-                alt={collection.name}
+                alt={t(collection.nameKey)}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
@@ -72,13 +75,13 @@ const Collections = () => {
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="font-display text-2xl font-medium text-card mb-1">
-                  {collection.name}
+                  {t(collection.nameKey)}
                 </h3>
                 <p className="text-sm text-card/80 mb-2">
-                  {collection.description}
+                  {t(collection.descriptionKey)}
                 </p>
                 <span className="text-xs text-card/60">
-                  {collection.count}
+                  {collection.count} {t("common.results")}
                 </span>
               </div>
             </motion.a>
