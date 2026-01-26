@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -130,11 +131,23 @@ const ageRanges = [
 ];
 
 const ShopPage = () => {
+  const [searchParams] = useSearchParams();
   const [gridSize, setGridSize] = useState<2 | 3 | 4>(3);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedBudgets, setSelectedBudgets] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("newest");
+
+  // Apply filters from URL params (from GiftFinder)
+  useEffect(() => {
+    const ageParam = searchParams.get("age");
+    const typeParam = searchParams.get("type");
+    const budgetParam = searchParams.get("budget");
+
+    if (ageParam) setSelectedAges([ageParam]);
+    if (typeParam) setSelectedTypes([typeParam]);
+    if (budgetParam) setSelectedBudgets([budgetParam]);
+  }, [searchParams]);
 
   const toggleFilter = (
     value: string,

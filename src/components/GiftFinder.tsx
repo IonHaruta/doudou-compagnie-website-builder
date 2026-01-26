@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -25,7 +26,30 @@ const steps = [
   },
 ];
 
+// Mapping from GiftFinder options to ShopPage filter IDs
+const ageMapping: Record<string, string> = {
+  "0-6 luni": "0-6",
+  "6-12 luni": "6-12",
+  "1-3 ani": "1-3",
+  "3+ ani": "3+",
+};
+
+const typeMapping: Record<string, string> = {
+  "Pluș": "plush",
+  "Marionetă": "puppets",
+  "Cutie muzicală": "music-boxes",
+  "Set cadou": "doudous",
+};
+
+const budgetMapping: Record<string, string> = {
+  "Sub €20": "under-20",
+  "€20-€30": "20-40",
+  "€30-€50": "40-60",
+  "Peste €50": "over-60",
+};
+
 const GiftFinder = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -39,6 +63,27 @@ const GiftFinder = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
+  };
+
+  const handleFindGift = () => {
+    const params = new URLSearchParams();
+    
+    // Age filter (step 0)
+    if (selectedOptions[0] && ageMapping[selectedOptions[0]]) {
+      params.set("age", ageMapping[selectedOptions[0]]);
+    }
+    
+    // Type filter (step 1)
+    if (selectedOptions[1] && typeMapping[selectedOptions[1]]) {
+      params.set("type", typeMapping[selectedOptions[1]]);
+    }
+    
+    // Budget filter (step 3)
+    if (selectedOptions[3] && budgetMapping[selectedOptions[3]]) {
+      params.set("budget", budgetMapping[selectedOptions[3]]);
+    }
+    
+    navigate(`/magazin?${params.toString()}`);
   };
 
   return (
@@ -115,7 +160,7 @@ const GiftFinder = () => {
             </div>
 
             <Button
-              onClick={handleNext}
+              onClick={currentStep === steps.length - 1 ? handleFindGift : handleNext}
               disabled={!selectedOptions[currentStep]}
               className="w-full py-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-base"
             >
