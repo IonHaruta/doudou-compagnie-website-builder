@@ -7,144 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
-import productPinkBunny from "@/assets/product-pink-bunny.jpg";
-import productGreyBear from "@/assets/product-grey-bear.jpg";
-import productWolf from "@/assets/product-wolf.jpg";
-import productMusicBox from "@/assets/product-music-box.jpg";
-import productDeer from "@/assets/product-deer.jpg";
-import productBunny from "@/assets/product-bunny.jpg";
-import productElephant from "@/assets/product-elephant.jpg";
-import productBear from "@/assets/product-bear.jpg";
-import productPuppy from "@/assets/product-puppy.jpg";
-
-const products = [
-  {
-    id: 1,
-    name: "Iepuraș Bonbon Roz",
-    price: 24.90,
-    image: productPinkBunny,
-    badge: "bestseller" as const,
-    stock: "in-stock" as const,
-    type: "doudous",
-    ageRange: "0-6",
-    color: "roz",
-  },
-  {
-    id: 2,
-    name: "Urs Lună Plină",
-    price: 34.90,
-    image: productGreyBear,
-    badge: "new" as const,
-    stock: "in-stock" as const,
-    type: "plush",
-    ageRange: "6-12",
-    color: "gri",
-  },
-  {
-    id: 3,
-    name: "Marionetă Lup",
-    price: 19.90,
-    image: productWolf,
-    badge: "bestseller" as const,
-    stock: "limited" as const,
-    type: "puppets",
-    ageRange: "1-3",
-    color: "gri",
-  },
-  {
-    id: 4,
-    name: "Cutie Muzicală Stea",
-    price: 29.90,
-    image: productMusicBox,
-    badge: "new" as const,
-    stock: "in-stock" as const,
-    type: "music-boxes",
-    ageRange: "0-6",
-    color: "bej",
-  },
-  {
-    id: 5,
-    name: "Pui de Cerb Boh'aime",
-    price: 27.90,
-    image: productDeer,
-    badge: "new" as const,
-    stock: "in-stock" as const,
-    type: "doudous",
-    ageRange: "0-6",
-    color: "bej",
-  },
-  {
-    id: 6,
-    name: "Iepuraș Floricică",
-    price: 22.90,
-    image: productBunny,
-    badge: "bestseller" as const,
-    stock: "in-stock" as const,
-    type: "doudous",
-    ageRange: "0-6",
-    color: "roz",
-  },
-  {
-    id: 7,
-    name: "Elefant Boh'aime",
-    price: 45.90,
-    image: productElephant,
-    badge: "new" as const,
-    stock: "in-stock" as const,
-    type: "plush",
-    ageRange: "6-12",
-    color: "albastru",
-  },
-  {
-    id: 8,
-    name: "Urs Bonbon Maro",
-    price: 65.90,
-    image: productBear,
-    badge: "bestseller" as const,
-    stock: "limited" as const,
-    type: "doudous",
-    ageRange: "3+",
-    color: "bej",
-  },
-  {
-    id: 9,
-    name: "Cățeluș Dormitor",
-    price: 15.90,
-    image: productPuppy,
-    stock: "in-stock" as const,
-    type: "plush",
-    ageRange: "1-3",
-    color: "bej",
-  },
-];
-
-const productTypes = [
-  { id: "doudous", label: "Doudous" },
-  { id: "plush", label: "Jucării de Pluș" },
-  { id: "puppets", label: "Marionete" },
-  { id: "music-boxes", label: "Cutii Muzicale" },
-];
-
-const budgetRanges = [
-  { id: "under-20", label: "<20 euro", min: 0, max: 20 },
-  { id: "20-40", label: "20-40 euro", min: 20, max: 40 },
-  { id: "40-60", label: "40-60 euro", min: 40, max: 60 },
-  { id: "over-60", label: ">60 euro", min: 60, max: Infinity },
-];
-
-const ageRanges = [
-  { id: "0-6", label: "0-6 luni" },
-  { id: "6-12", label: "6-12 luni" },
-  { id: "1-3", label: "1-3 ani" },
-  { id: "3+", label: "3+ ani" },
-];
-
-const colorOptions = [
-  { id: "roz", label: "Roz", hex: "#F8B4C0" },
-  { id: "albastru", label: "Albastru", hex: "#87CEEB" },
-  { id: "bej", label: "Bej/Crem", hex: "#D4C4A8" },
-  { id: "gri", label: "Gri", hex: "#9CA3AF" },
-];
+import { products, productTypes, budgetRanges, ageRanges, colorOptions } from "@/data/products";
 
 const ShopPage = () => {
   const [searchParams] = useSearchParams();
@@ -403,6 +266,7 @@ const ShopPage = () => {
                     setSelectedTypes([]);
                     setSelectedBudgets([]);
                     setSelectedAges([]);
+                    setSelectedColors([]);
                   }}
                   className="mt-4 text-primary hover:underline"
                 >
