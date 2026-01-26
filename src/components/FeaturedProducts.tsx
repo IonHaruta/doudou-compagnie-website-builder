@@ -12,7 +12,7 @@ import productDeer from "@/assets/product-deer.jpg";
 const products = [
   {
     id: 1,
-    name: "Iepuraș Bonbon Roz",
+    nameKey: "product.pinkBunny",
     price: 24.90,
     image: productPinkBunny,
     badge: "bestseller" as const,
@@ -20,7 +20,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Urs Lună Plină",
+    nameKey: "product.greyBear",
     price: 34.90,
     image: productGreyBear,
     badge: "new" as const,
@@ -28,7 +28,7 @@ const products = [
   },
   {
     id: 3,
-    name: "Marionetă Lup",
+    nameKey: "product.wolfPuppet",
     price: 19.90,
     image: productWolf,
     badge: "bestseller" as const,
@@ -36,7 +36,7 @@ const products = [
   },
   {
     id: 4,
-    name: "Cutie Muzicală Stea",
+    nameKey: "product.musicBox",
     price: 29.90,
     image: productMusicBox,
     badge: "new" as const,
@@ -44,7 +44,7 @@ const products = [
   },
   {
     id: 5,
-    name: "Pui de Cerb Boh'aime Roz",
+    nameKey: "product.deer",
     price: 27.90,
     image: productDeer,
     badge: "new" as const,

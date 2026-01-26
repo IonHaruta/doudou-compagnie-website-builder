@@ -25,15 +25,17 @@ const ProductPage = () => {
       <div className="min-h-screen bg-background">
         <Navbar />
         <div className="pt-32 text-center">
-          <h1 className="text-2xl font-display">Produsul nu a fost găsit</h1>
+          <h1 className="text-2xl font-display">{t("product.notFound")}</h1>
           <Link to="/magazin" className="text-primary hover:underline mt-4 inline-block">
-            Înapoi la magazin
+            {t("product.backToShop")}
           </Link>
         </div>
         <Footer />
       </div>
     );
   }
+
+  const productName = t(product.nameKey);
 
   const relatedProducts = products
     .filter((p) => p.type === product.type && p.id !== product.id)
@@ -53,13 +55,13 @@ const ProductPage = () => {
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
-      name: product.name,
+      name: productName,
       price: product.price,
       image: product.image,
     }, quantity);
     toast({
-      title: "Adăugat în coș",
-      description: `${quantity}x ${product.name}`,
+      title: t("product.addedToCart"),
+      description: `${quantity}x ${productName}`,
     });
   };
 
@@ -79,7 +81,7 @@ const ProductPage = () => {
               {t("nav.shop")}
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground">{product.name}</span>
+            <span className="text-foreground">{productName}</span>
           </nav>
         </div>
       </div>
@@ -106,7 +108,7 @@ const ProductPage = () => {
             </button>
             <img
               src={product.image}
-              alt={product.name}
+              alt={productName}
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -119,7 +121,7 @@ const ProductPage = () => {
             className="flex flex-col"
           >
             <h1 className="font-display text-3xl lg:text-4xl font-medium text-foreground mb-3">
-              {product.name}
+              {productName}
             </h1>
 
             {/* Rating */}
@@ -231,9 +233,15 @@ const ProductPage = () => {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
             {relatedProducts.map((p) => (
-              <Link key={p.id} to={`/produs/${p.id}`}>
-                <ProductCard {...p} />
-              </Link>
+              <ProductCard
+                key={p.id}
+                id={p.id}
+                nameKey={p.nameKey}
+                price={p.price}
+                image={p.image}
+                badge={p.badge}
+                stock={p.stock}
+              />
             ))}
           </div>
         </div>

@@ -11,58 +11,61 @@ import {
 } from "@/components/ui/accordion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-const faqs = [
-  {
-    question: "Cum pot urmări comanda mea?",
-    answer: "După expedierea comenzii, veți primi un email cu numărul de urmărire. Puteți verifica starea livrării accesând link-ul din email sau contactându-ne direct.",
-  },
-  {
-    question: "Care este politica de retur?",
-    answer: "Acceptăm retururi în termen de 30 de zile de la primirea produsului. Produsele trebuie să fie în starea originală, cu etichetele atașate și în ambalajul original.",
-  },
-  {
-    question: "Cum pot spăla doudou-ul?",
-    answer: "Majoritatea doudou-urilor noastre pot fi spălate la mașină la 30°C, în ciclu delicat. Vă recomandăm să folosiți o pungă de protecție și să evitați uscătorul.",
-  },
-  {
-    question: "Produsele sunt sigure pentru nou-născuți?",
-    answer: "Da, toate produsele noastre sunt testate și certificate conform normelor europene de siguranță EN71 și sunt potrivite pentru utilizare de la naștere.",
-  },
-  {
-    question: "Oferiți servicii de ambalare cadou?",
-    answer: "Da! La finalizarea comenzii puteți selecta opțiunea de ambalare cadou. Oferim ambalaj premium cu panglică și un mesaj personalizat.",
-  },
-  {
-    question: "Cât durează livrarea?",
-    answer: "Livrarea standard durează 3-5 zile lucrătoare în România. Pentru comenzile plasate înainte de ora 14:00, expedierea se face în aceeași zi.",
-  },
-];
-
-const contactInfo = [
-  {
-    icon: Mail,
-    title: "Email",
-    value: "contact@doudou-ro.com",
-  },
-  {
-    icon: Phone,
-    title: "Telefon",
-    value: "+40 21 123 4567",
-  },
-  {
-    icon: MapPin,
-    title: "Adresă",
-    value: "București, Sector 1, România",
-  },
-  {
-    icon: Clock,
-    title: "Program",
-    value: "Luni - Vineri: 9:00 - 18:00",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HelpPage = () => {
+  const { t } = useLanguage();
+
+  const faqs = [
+    {
+      question: t("faq.tracking"),
+      answer: t("faq.trackingAnswer"),
+    },
+    {
+      question: t("faq.returns"),
+      answer: t("faq.returnsAnswer"),
+    },
+    {
+      question: t("faq.washing"),
+      answer: t("faq.washingAnswer"),
+    },
+    {
+      question: t("faq.newborn"),
+      answer: t("faq.newbornAnswer"),
+    },
+    {
+      question: t("faq.giftWrap"),
+      answer: t("faq.giftWrapAnswer"),
+    },
+    {
+      question: t("faq.delivery"),
+      answer: t("faq.deliveryAnswer"),
+    },
+  ];
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: t("help.email"),
+      value: "contact@doudou-ro.com",
+    },
+    {
+      icon: Phone,
+      title: t("help.phone"),
+      value: "+40 21 123 4567",
+    },
+    {
+      icon: MapPin,
+      title: t("help.address"),
+      value: "București, Sector 1, România",
+    },
+    {
+      icon: Clock,
+      title: t("help.hours"),
+      value: t("help.hoursValue"),
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -76,9 +79,9 @@ const HelpPage = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-2">
-              Ajutor
+              {t("help.title")}
             </h1>
-            <p className="text-muted-foreground">Suntem aici să vă ajutăm</p>
+            <p className="text-muted-foreground">{t("help.subtitle")}</p>
           </motion.div>
         </div>
       </div>
@@ -92,7 +95,7 @@ const HelpPage = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-display text-2xl md:text-3xl font-medium text-foreground mb-8">
-              Întrebări Frecvente
+              {t("help.faq")}
             </h2>
 
             <Accordion type="single" collapsible className="max-w-3xl">
@@ -123,7 +126,7 @@ const HelpPage = () => {
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-display text-2xl md:text-3xl font-medium text-foreground mb-8">
-                Contactați-ne
+                {t("help.contact")}
               </h2>
 
               <div className="space-y-6">
@@ -143,7 +146,7 @@ const HelpPage = () => {
               <div className="mt-8">
                 <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6">
                   <MessageCircle className="w-4 h-4" />
-                  Chat Live
+                  {t("help.liveChat")}
                 </Button>
               </div>
             </motion.div>
@@ -157,20 +160,20 @@ const HelpPage = () => {
               className="bg-card rounded-2xl p-6 lg:p-8"
             >
               <h3 className="font-display text-xl font-medium text-foreground mb-6">
-                Trimiteți un mesaj
+                {t("help.sendMessage")}
               </h3>
 
               <form className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Nume
+                      {t("help.name")}
                     </label>
-                    <Input placeholder="Numele dvs." />
+                    <Input placeholder={t("help.namePlaceholder")} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Email
+                      {t("help.email")}
                     </label>
                     <Input type="email" placeholder="email@exemplu.com" />
                   </div>
@@ -178,23 +181,23 @@ const HelpPage = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Subiect
+                    {t("help.subject")}
                   </label>
-                  <Input placeholder="Cum vă putem ajuta?" />
+                  <Input placeholder={t("help.subjectPlaceholder")} />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Mesaj
+                    {t("help.message")}
                   </label>
                   <Textarea 
-                    placeholder="Descrieți problema sau întrebarea dvs..." 
+                    placeholder={t("help.messagePlaceholder")} 
                     rows={5}
                   />
                 </div>
 
                 <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl py-6">
-                  Trimite Mesajul
+                  {t("help.send")}
                 </Button>
               </form>
             </motion.div>

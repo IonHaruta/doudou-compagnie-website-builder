@@ -8,9 +8,9 @@ const Footer = () => {
 
   const footerLinks = {
     magazin: [
-      { name: "Toate Produsele", href: "/magazin" },
-      { name: t("shop.new"), href: "/magazin?filter=new" },
-      { name: t("shop.bestseller"), href: "/magazin?filter=bestseller" },
+      { name: t("footer.allProducts"), href: "/magazin" },
+      { name: t("footer.newArrivals"), href: "/magazin?filter=new" },
+      { name: t("footer.bestsellers"), href: "/magazin?filter=bestseller" },
       { name: t("shop.doudous"), href: "/magazin?filter=doudous" },
     ],
     colectii: [
@@ -20,15 +20,15 @@ const Footer = () => {
       { name: t("shop.musicBoxes"), href: "/magazin?filter=music-boxes" },
     ],
     ajutor: [
-      { name: "Contact", href: "/ajutor" },
-      { name: "Livrare", href: "/ajutor" },
-      { name: "Returnări", href: "/ajutor" },
-      { name: "FAQ", href: "/ajutor" },
+      { name: t("footer.contact"), href: "/ajutor" },
+      { name: t("footer.delivery"), href: "/ajutor" },
+      { name: t("footer.returnsFooter"), href: "/ajutor" },
+      { name: t("footer.faqFooter"), href: "/ajutor" },
     ],
     legal: [
-      { name: "Termeni și Condiții", href: "#" },
-      { name: "Confidențialitate", href: "#" },
-      { name: "Cookies", href: "#" },
+      { name: t("footer.terms"), href: "#" },
+      { name: t("footer.privacy"), href: "#" },
+      { name: t("footer.cookies"), href: "#" },
     ],
   };
 
@@ -48,8 +48,7 @@ const Footer = () => {
                 Doudou & Compagnie
               </h3>
               <p className="text-card/70 mb-6 text-sm leading-relaxed">
-                Creatori de momente tandre din 1999. Jucării premium pentru bebeluși, 
-                fabricate cu dragoste în Franța.
+                {t("footer.description")}
               </p>
 
               {/* Contact */}
@@ -127,7 +126,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-medium mb-4 text-sm">Legal</h4>
+            <h4 className="font-medium mb-4 text-sm">{t("footer.legal")}</h4>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>

@@ -4,6 +4,7 @@ import { Heart, Sparkles, Gift, Package } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 import productPinkBunny from "@/assets/product-pink-bunny.jpg";
 import productGreyBear from "@/assets/product-grey-bear.jpg";
 import productMusicBox from "@/assets/product-music-box.jpg";
@@ -13,37 +14,10 @@ import productElephant from "@/assets/product-elephant.jpg";
 import productBear from "@/assets/product-bear.jpg";
 import productWolf from "@/assets/product-wolf.jpg";
 
-const occasions = [
-  {
-    id: "birth",
-    icon: Heart,
-    title: "Naștere",
-    description: "Celebrați sosirea bebelușului",
-  },
-  {
-    id: "baptism",
-    icon: Sparkles,
-    title: "Botez",
-    description: "O amintire de neuitat",
-  },
-  {
-    id: "birthday",
-    icon: Gift,
-    title: "Zi de Naștere",
-    description: "Bucurați cei mici",
-  },
-  {
-    id: "gift-sets",
-    icon: Package,
-    title: "Seturi Cadou",
-    description: "Tot într-unul, gata de oferit",
-  },
-];
-
 const giftProducts = [
   {
     id: 1,
-    name: "Iepuraș Bonbon Roz",
+    nameKey: "product.pinkBunny",
     price: 24.90,
     image: productPinkBunny,
     badge: "bestseller" as const,
@@ -52,7 +26,7 @@ const giftProducts = [
   },
   {
     id: 2,
-    name: "Urs Lună Plină",
+    nameKey: "product.greyBear",
     price: 34.90,
     image: productGreyBear,
     badge: "bestseller" as const,
@@ -61,7 +35,7 @@ const giftProducts = [
   },
   {
     id: 3,
-    name: "Cutie Muzicală Stea",
+    nameKey: "product.musicBox",
     price: 29.90,
     image: productMusicBox,
     badge: "new" as const,
@@ -70,7 +44,7 @@ const giftProducts = [
   },
   {
     id: 4,
-    name: "Pui de Cerb Boh'aime",
+    nameKey: "product.deer",
     price: 27.90,
     image: productDeer,
     badge: "new" as const,
@@ -79,7 +53,7 @@ const giftProducts = [
   },
   {
     id: 5,
-    name: "Iepuraș Floricică",
+    nameKey: "product.bunny",
     price: 22.90,
     image: productBunny,
     badge: "bestseller" as const,
@@ -88,7 +62,7 @@ const giftProducts = [
   },
   {
     id: 6,
-    name: "Elefant Boh'aime",
+    nameKey: "product.elephant",
     price: 45.90,
     image: productElephant,
     badge: "new" as const,
@@ -97,7 +71,7 @@ const giftProducts = [
   },
   {
     id: 7,
-    name: "Set Cadou Premium Urs",
+    nameKey: "product.bear",
     price: 65.90,
     image: productBear,
     badge: "bestseller" as const,
@@ -106,7 +80,7 @@ const giftProducts = [
   },
   {
     id: 8,
-    name: "Set Marionetă Lup",
+    nameKey: "product.wolfPuppet",
     price: 39.90,
     image: productWolf,
     badge: "new" as const,
@@ -117,6 +91,34 @@ const giftProducts = [
 
 const GiftIdeasPage = () => {
   const [selectedOccasion, setSelectedOccasion] = useState<string | null>(null);
+  const { t } = useLanguage();
+
+  const occasions = [
+    {
+      id: "birth",
+      icon: Heart,
+      title: t("occasion.birth"),
+      description: t("occasion.birthDesc"),
+    },
+    {
+      id: "baptism",
+      icon: Sparkles,
+      title: t("occasion.baptism"),
+      description: t("occasion.baptismDesc"),
+    },
+    {
+      id: "birthday",
+      icon: Gift,
+      title: t("occasion.birthday"),
+      description: t("occasion.birthdayDesc"),
+    },
+    {
+      id: "gift-sets",
+      icon: Package,
+      title: t("occasion.giftSets"),
+      description: t("occasion.giftSetsDesc"),
+    },
+  ];
 
   const filteredProducts = useMemo(() => {
     if (!selectedOccasion) {
@@ -126,9 +128,9 @@ const GiftIdeasPage = () => {
   }, [selectedOccasion]);
 
   const getSectionTitle = () => {
-    if (!selectedOccasion) return "Toate Ideile Cadouri";
+    if (!selectedOccasion) return t("giftIdeas.allGifts");
     const occasion = occasions.find((o) => o.id === selectedOccasion);
-    return occasion ? `Cadouri pentru ${occasion.title}` : "Idei Cadouri";
+    return occasion ? `${t("giftIdeas.giftsFor")} ${occasion.title}` : t("nav.giftIdeas");
   };
 
   return (
@@ -144,9 +146,9 @@ const GiftIdeasPage = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-2">
-              Idei Cadouri
+              {t("giftIdeas.title")}
             </h1>
-            <p className="text-muted-foreground">Răspundeți la câteva întrebări pentru a găsi doudoul ideal</p>
+            <p className="text-muted-foreground">{t("giftIdeas.subtitle")}</p>
           </motion.div>
         </div>
       </div>
@@ -196,7 +198,7 @@ const GiftIdeasPage = () => {
             {getSectionTitle()}
           </h2>
           <p className="text-muted-foreground mt-1">
-            {filteredProducts.length} produse găsite
+            {filteredProducts.length} {t("common.productsFound")}
           </p>
         </motion.div>
 
@@ -211,7 +213,14 @@ const GiftIdeasPage = () => {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
-                <ProductCard {...product} />
+                <ProductCard
+                  id={product.id}
+                  nameKey={product.nameKey}
+                  price={product.price}
+                  image={product.image}
+                  badge={product.badge}
+                  stock={product.stock}
+                />
               </motion.div>
             ))}
           </AnimatePresence>
@@ -224,13 +233,13 @@ const GiftIdeasPage = () => {
             className="text-center py-16"
           >
             <p className="text-muted-foreground text-lg">
-              Nu am găsit produse pentru această ocazie.
+              {t("giftIdeas.noProducts")}
             </p>
             <button
               onClick={() => setSelectedOccasion(null)}
               className="mt-4 text-primary hover:underline"
             >
-              Afișează toate produsele
+              {t("giftIdeas.showAll")}
             </button>
           </motion.div>
         )}
