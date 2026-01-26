@@ -134,7 +134,7 @@ const ShopPage = () => {
                         checked={selectedTypes.includes(type.id)}
                         onCheckedChange={() => toggleFilter(type.id, selectedTypes, setSelectedTypes)}
                       />
-                      <span className="text-sm text-muted-foreground">{type.label}</span>
+                      <span className="text-sm text-muted-foreground">{t(type.labelKey)}</span>
                     </label>
                   ))}
                 </div>
@@ -150,7 +150,7 @@ const ShopPage = () => {
                         checked={selectedBudgets.includes(range.id)}
                         onCheckedChange={() => toggleFilter(range.id, selectedBudgets, setSelectedBudgets)}
                       />
-                      <span className="text-sm text-muted-foreground">{range.label}</span>
+                      <span className="text-sm text-muted-foreground">{t(range.labelKey)}</span>
                     </label>
                   ))}
                 </div>
@@ -166,7 +166,7 @@ const ShopPage = () => {
                         checked={selectedAges.includes(range.id)}
                         onCheckedChange={() => toggleFilter(range.id, selectedAges, setSelectedAges)}
                       />
-                      <span className="text-sm text-muted-foreground">{range.label}</span>
+                      <span className="text-sm text-muted-foreground">{t(range.labelKey)}</span>
                     </label>
                   ))}
                 </div>
@@ -186,7 +186,7 @@ const ShopPage = () => {
                         className="w-4 h-4 rounded-full border border-border" 
                         style={{ backgroundColor: color.hex }}
                       />
-                      <span className="text-sm text-muted-foreground">{color.label}</span>
+                      <span className="text-sm text-muted-foreground">{t(color.labelKey)}</span>
                     </label>
                   ))}
                 </div>
@@ -248,7 +248,14 @@ const ShopPage = () => {
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                   >
-                    <ProductCard {...product} />
+                    <ProductCard
+                      id={product.id}
+                      nameKey={product.nameKey}
+                      price={product.price}
+                      image={product.image}
+                      badge={product.badge}
+                      stock={product.stock}
+                    />
                   </motion.div>
                 ))}
               </AnimatePresence>

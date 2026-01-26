@@ -2,32 +2,35 @@ import { motion } from "framer-motion";
 import { Bookmark, Heart, Shield, Leaf } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@/assets/hero-nursery.jpg";
 
-const values = [
-  {
-    icon: Bookmark,
-    title: "Design Franțuzesc",
-    description: "Creat și conceput în atelierele noastre pariziene",
-  },
-  {
-    icon: Heart,
-    title: "Calitate",
-    description: "Materiale premium, durabile și certificate",
-  },
-  {
-    icon: Shield,
-    title: "Siguranță",
-    description: "Teste riguroase, standarde europene",
-  },
-  {
-    icon: Leaf,
-    title: "Eco-friendly",
-    description: "Angajați pentru planetă",
-  },
-];
-
 const OurStoryPage = () => {
+  const { t } = useLanguage();
+
+  const values = [
+    {
+      icon: Bookmark,
+      title: t("story.frenchDesign"),
+      description: t("story.frenchDesignDesc"),
+    },
+    {
+      icon: Heart,
+      title: t("story.quality"),
+      description: t("story.qualityDesc"),
+    },
+    {
+      icon: Shield,
+      title: t("story.safety"),
+      description: t("story.safetyDesc"),
+    },
+    {
+      icon: Leaf,
+      title: t("story.ecoFriendly"),
+      description: t("story.ecoFriendlyDesc"),
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -52,10 +55,10 @@ const OurStoryPage = () => {
             className="max-w-3xl mx-auto text-center"
           >
             <h1 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-6">
-              Povestea Noastră
+              {t("story.title")}
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Din 1999, creăm compani de viață pentru cei mici. Fiecare doudou este conceput cu dragoste la Paris, pentru a aduce confort și tandrețe fiecărui copil.
+              {t("story.intro")}
             </p>
           </motion.div>
         </div>
@@ -72,7 +75,7 @@ const OurStoryPage = () => {
             className="text-center mb-12"
           >
             <h2 className="font-display text-3xl md:text-4xl font-medium text-foreground">
-              Valorile Noastre
+              {t("story.values")}
             </h2>
           </motion.div>
 
@@ -112,7 +115,7 @@ const OurStoryPage = () => {
             className="max-w-3xl mx-auto"
           >
             <h2 className="font-display text-3xl md:text-4xl font-medium text-foreground text-center mb-12">
-              Istoria Noastră
+              {t("story.history")}
             </h2>
 
             <div className="space-y-8">
@@ -121,8 +124,8 @@ const OurStoryPage = () => {
                   <span className="font-display text-xl font-medium text-primary">1999</span>
                 </div>
                 <div className="flex-1 pb-8 border-l-2 border-primary/20 pl-6">
-                  <h3 className="font-medium text-foreground mb-2">Începutul Poveștii</h3>
-                  <p className="text-muted-foreground">Doudou & Compagnie s-a născut la Paris, cu misiunea de a crea compani moi pentru bebeluși.</p>
+                  <h3 className="font-medium text-foreground mb-2">{t("story.1999")}</h3>
+                  <p className="text-muted-foreground">{t("story.1999Desc")}</p>
                 </div>
               </div>
 
@@ -131,8 +134,8 @@ const OurStoryPage = () => {
                   <span className="font-display text-xl font-medium text-primary">2010</span>
                 </div>
                 <div className="flex-1 pb-8 border-l-2 border-primary/20 pl-6">
-                  <h3 className="font-medium text-foreground mb-2">Extindere Internațională</h3>
-                  <p className="text-muted-foreground">Am început să exportăm doudou-urile noastre în toată Europa, aducând bucurie copiilor din întreaga lume.</p>
+                  <h3 className="font-medium text-foreground mb-2">{t("story.2010")}</h3>
+                  <p className="text-muted-foreground">{t("story.2010Desc")}</p>
                 </div>
               </div>
 
@@ -141,8 +144,8 @@ const OurStoryPage = () => {
                   <span className="font-display text-xl font-medium text-primary">2024</span>
                 </div>
                 <div className="flex-1 pl-6">
-                  <h3 className="font-medium text-foreground mb-2">25 de Ani de Tandrețe</h3>
-                  <p className="text-muted-foreground">Celebrăm un sfert de secol de creație și inovație, continuând să aducem confort celor mici.</p>
+                  <h3 className="font-medium text-foreground mb-2">{t("story.2024")}</h3>
+                  <p className="text-muted-foreground">{t("story.2024Desc")}</p>
                 </div>
               </div>
             </div>

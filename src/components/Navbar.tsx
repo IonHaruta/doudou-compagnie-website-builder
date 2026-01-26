@@ -53,7 +53,7 @@ const Navbar = () => {
 
   const searchResults = searchQuery.length >= 2
     ? products.filter(p => 
-        p.name.toLowerCase().includes(searchQuery.toLowerCase())
+        t(p.nameKey).toLowerCase().includes(searchQuery.toLowerCase())
       ).slice(0, 5)
     : [];
 
@@ -330,11 +330,11 @@ const Navbar = () => {
                   >
                     <img
                       src={product.image}
-                      alt={product.name}
+                      alt={t(product.nameKey)}
                       className="w-12 h-12 rounded-lg object-cover"
                     />
                     <div className="flex-1">
-                      <p className="font-medium text-foreground">{product.name}</p>
+                      <p className="font-medium text-foreground">{t(product.nameKey)}</p>
                       <p className="text-sm text-muted-foreground">€{product.price.toFixed(2)}</p>
                     </div>
                   </button>

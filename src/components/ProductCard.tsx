@@ -1,26 +1,31 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProductCardProps {
   id: number;
-  name: string;
+  nameKey: string;
   price: number;
   image: string;
   badge?: "bestseller" | "new";
   stock: "in-stock" | "limited" | "out-of-stock";
 }
 
-const ProductCard = ({ id, name, price, image, badge, stock }: ProductCardProps) => {
+const ProductCard = ({ id, nameKey, price, image, badge, stock }: ProductCardProps) => {
+  const { t } = useLanguage();
+
   const stockLabels = {
-    "in-stock": { text: "În stoc", color: "text-sage-green" },
-    "limited": { text: "Stoc limitat", color: "text-primary" },
-    "out-of-stock": { text: "Indisponibil", color: "text-muted-foreground" },
+    "in-stock": { text: t("product.inStock"), color: "text-sage-green" },
+    "limited": { text: t("product.limitedStock"), color: "text-primary" },
+    "out-of-stock": { text: t("product.outOfStock"), color: "text-muted-foreground" },
   };
 
   const badgeLabels = {
-    bestseller: { text: "Cel mai vândut", bg: "bg-primary" },
-    new: { text: "Nou", bg: "bg-sage-green" },
+    bestseller: { text: t("common.bestseller"), bg: "bg-primary" },
+    new: { text: t("common.new"), bg: "bg-sage-green" },
   };
+
+  const name = t(nameKey);
 
   return (
     <Link to={`/produs/${id}`}>

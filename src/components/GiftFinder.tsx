@@ -2,67 +2,89 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
-const steps = [
-  {
-    id: 1,
-    question: "Pentru ce vârstă?",
-    options: ["0-6 luni", "6-12 luni", "1-3 ani", "3+ ani"],
-  },
-  {
-    id: 2,
-    question: "Ce tip de jucărie?",
-    options: ["Doudous", "Jucării de Pluș", "Marionete", "Cutii Muzicale"],
-  },
-  {
-    id: 3,
-    question: "Ce culoare preferi?",
-    options: ["Roz", "Albastru", "Bej/Crem", "Multicolor"],
-  },
-  {
-    id: 4,
-    question: "Care este bugetul?",
-    options: ["<20 euro", "20-40 euro", "40-60 euro", ">60 euro"],
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Mapping from GiftFinder options to ShopPage filter IDs
 const ageMapping: Record<string, string> = {
-  "0-6 luni": "0-6",
-  "6-12 luni": "6-12",
-  "1-3 ani": "1-3",
-  "3+ ani": "3+",
+  "0-6": "0-6",
+  "6-12": "6-12",
+  "1-3": "1-3",
+  "3+": "3+",
 };
 
 const typeMapping: Record<string, string> = {
-  "Doudous": "doudous",
-  "Jucării de Pluș": "plush",
-  "Marionete": "puppets",
-  "Cutii Muzicale": "music-boxes",
+  "doudous": "doudous",
+  "plush": "plush",
+  "puppets": "puppets",
+  "music-boxes": "music-boxes",
 };
 
 const budgetMapping: Record<string, string> = {
-  "<20 euro": "under-20",
-  "20-40 euro": "20-40",
-  "40-60 euro": "40-60",
-  ">60 euro": "over-60",
+  "under-20": "under-20",
+  "20-40": "20-40",
+  "40-60": "40-60",
+  "over-60": "over-60",
 };
 
 const colorMapping: Record<string, string> = {
-  "Roz": "roz",
-  "Albastru": "albastru",
-  "Bej/Crem": "bej",
-  "Multicolor": "multicolor",
+  "roz": "roz",
+  "albastru": "albastru",
+  "bej": "bej",
+  "multicolor": "multicolor",
 };
 
 const GiftFinder = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
-  const handleOptionSelect = (option: string) => {
+  const steps = [
+    {
+      id: 1,
+      question: t("gift.questionAge"),
+      options: [
+        { id: "0-6", label: t("age.0-6") },
+        { id: "6-12", label: t("age.6-12") },
+        { id: "1-3", label: t("age.1-3") },
+        { id: "3+", label: t("age.3+") },
+      ],
+    },
+    {
+      id: 2,
+      question: t("gift.questionType"),
+      options: [
+        { id: "doudous", label: t("productType.doudous") },
+        { id: "plush", label: t("productType.plush") },
+        { id: "puppets", label: t("productType.puppets") },
+        { id: "music-boxes", label: t("productType.musicBoxes") },
+      ],
+    },
+    {
+      id: 3,
+      question: t("gift.questionColor"),
+      options: [
+        { id: "roz", label: t("color.roz") },
+        { id: "albastru", label: t("color.albastru") },
+        { id: "bej", label: t("color.bej") },
+        { id: "multicolor", label: t("color.multicolor") },
+      ],
+    },
+    {
+      id: 4,
+      question: t("gift.questionBudget"),
+      options: [
+        { id: "under-20", label: t("budget.under20") },
+        { id: "20-40", label: t("budget.20-40") },
+        { id: "40-60", label: t("budget.40-60") },
+        { id: "over-60", label: t("budget.over60") },
+      ],
+    },
+  ];
+
+  const handleOptionSelect = (optionId: string) => {
     const newSelections = [...selectedOptions];
-    newSelections[currentStep] = option;
+    newSelections[currentStep] = optionId;
     setSelectedOptions(newSelections);
   };
 
@@ -110,10 +132,10 @@ const GiftFinder = () => {
           className="text-center mb-10"
         >
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-4">
-            Găsește Cadoul Perfect
+            {t("gift.title")}
           </h2>
           <p className="text-muted-foreground">
-            Răspunde la câteva întrebări pentru a găsi doudoul ideal
+            {t("gift.subtitle")}
           </p>
         </motion.div>
 
@@ -158,15 +180,15 @@ const GiftFinder = () => {
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
               {steps[currentStep].options.map((option) => (
                 <button
-                  key={option}
-                  onClick={() => handleOptionSelect(option)}
+                  key={option.id}
+                  onClick={() => handleOptionSelect(option.id)}
                   className={`p-4 rounded-xl border-2 text-center transition-all ${
-                    selectedOptions[currentStep] === option
+                    selectedOptions[currentStep] === option.id
                       ? "border-primary bg-primary/5 text-foreground"
                       : "border-border hover:border-primary/50 text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {option}
+                  {option.label}
                 </button>
               ))}
             </div>
@@ -176,7 +198,7 @@ const GiftFinder = () => {
               disabled={!selectedOptions[currentStep]}
               className="w-full py-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-base"
             >
-              {currentStep === steps.length - 1 ? "Găsește Doudoul Meu" : "Continuă"}
+              {currentStep === steps.length - 1 ? t("gift.findDoudou") : t("gift.next")}
             </Button>
           </div>
         </motion.div>
