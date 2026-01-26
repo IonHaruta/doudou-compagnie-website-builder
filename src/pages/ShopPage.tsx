@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
 import { products, productTypes, budgetRanges, ageRanges, colorOptions } from "@/data/products";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ShopPage = () => {
   const [searchParams] = useSearchParams();
@@ -17,6 +18,7 @@ const ShopPage = () => {
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("newest");
+  const { t } = useLanguage();
 
   // Apply filters from URL params (from GiftFinder)
   useEffect(() => {
@@ -105,9 +107,9 @@ const ShopPage = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-2">
-              Magazin
+              {t("nav.shop")}
             </h1>
-            <p className="text-muted-foreground">{filteredProducts.length} rezultate</p>
+            <p className="text-muted-foreground">{filteredProducts.length} {t("shop.results")}</p>
           </motion.div>
         </div>
       </div>
@@ -119,12 +121,12 @@ const ShopPage = () => {
           <aside className="lg:w-64 flex-shrink-0">
             <div className="sticky top-24 space-y-8">
               <div>
-                <h3 className="font-display text-lg font-medium text-foreground mb-4">Filtre</h3>
+                <h3 className="font-display text-lg font-medium text-foreground mb-4">{t("shop.filters")}</h3>
               </div>
 
               {/* Product Type */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">Tip produs?</h4>
+                <h4 className="text-sm font-medium text-foreground mb-3">{t("shop.productType")}</h4>
                 <div className="space-y-2">
                   {productTypes.map((type) => (
                     <label key={type.id} className="flex items-center gap-2 cursor-pointer">
@@ -140,7 +142,7 @@ const ShopPage = () => {
 
               {/* Budget */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">Bugetul tău?</h4>
+                <h4 className="text-sm font-medium text-foreground mb-3">{t("shop.budget")}</h4>
                 <div className="space-y-2">
                   {budgetRanges.map((range) => (
                     <label key={range.id} className="flex items-center gap-2 cursor-pointer">
@@ -156,7 +158,7 @@ const ShopPage = () => {
 
               {/* Age */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">Pentru ce vârstă?</h4>
+                <h4 className="text-sm font-medium text-foreground mb-3">{t("shop.age")}</h4>
                 <div className="space-y-2">
                   {ageRanges.map((range) => (
                     <label key={range.id} className="flex items-center gap-2 cursor-pointer">
@@ -172,7 +174,7 @@ const ShopPage = () => {
 
               {/* Color */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">Culoare?</h4>
+                <h4 className="text-sm font-medium text-foreground mb-3">{t("shop.color")}</h4>
                 <div className="space-y-2">
                   {colorOptions.map((color) => (
                     <label key={color.id} className="flex items-center gap-2 cursor-pointer">
@@ -197,14 +199,14 @@ const ShopPage = () => {
             {/* Toolbar */}
             <div className="flex items-center justify-between mb-6">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="w-48">
                   <SelectValue placeholder="Sortează" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="newest">Cele mai noi</SelectItem>
-                  <SelectItem value="price-asc">Preț crescător</SelectItem>
-                  <SelectItem value="price-desc">Preț descrescător</SelectItem>
-                  <SelectItem value="popular">Popularitate</SelectItem>
+                  <SelectItem value="newest">{t("shop.sortNewest")}</SelectItem>
+                  <SelectItem value="price-asc">{t("shop.sortPriceAsc")}</SelectItem>
+                  <SelectItem value="price-desc">{t("shop.sortPriceDesc")}</SelectItem>
+                  <SelectItem value="popular">{t("shop.sortPopular")}</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -259,7 +261,7 @@ const ShopPage = () => {
                 className="text-center py-16"
               >
                 <p className="text-muted-foreground text-lg">
-                  Nu am găsit produse cu filtrele selectate.
+                  {t("shop.noResults")}
                 </p>
                 <button
                   onClick={() => {
@@ -270,7 +272,7 @@ const ShopPage = () => {
                   }}
                   className="mt-4 text-primary hover:underline"
                 >
-                  Resetează filtrele
+                  {t("shop.resetFilters")}
                 </button>
               </motion.div>
             )}

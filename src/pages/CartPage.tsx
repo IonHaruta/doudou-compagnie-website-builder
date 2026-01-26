@@ -27,7 +27,7 @@ const CartPage = () => {
                 {t("cart.empty")}
               </h1>
               <p className="text-muted-foreground mb-8">
-                Adaugă produse în coș pentru a continua.
+                {t("cart.addProducts")}
               </p>
               <Link to="/magazin">
                 <Button size="lg">
@@ -58,7 +58,7 @@ const CartPage = () => {
             <h1 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-2">
               {t("cart.title")}
             </h1>
-            <p className="text-muted-foreground">{totalItems} produse</p>
+            <p className="text-muted-foreground">{totalItems} {t("cart.products")}</p>
           </motion.div>
         </div>
       </div>
@@ -131,7 +131,7 @@ const CartPage = () => {
               className="bg-card rounded-2xl shadow-soft p-6 sticky top-24"
             >
               <h2 className="font-display text-xl font-medium text-foreground mb-6">
-                Sumar comandă
+                {t("cart.orderSummary")}
               </h2>
               
               <div className="space-y-4 pb-6 border-b border-border">

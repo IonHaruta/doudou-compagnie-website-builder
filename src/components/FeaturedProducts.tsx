@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 import productPinkBunny from "@/assets/product-pink-bunny.jpg";
 import productGreyBear from "@/assets/product-grey-bear.jpg";
 import productWolf from "@/assets/product-wolf.jpg";
@@ -51,6 +53,8 @@ const products = [
 ];
 
 const FeaturedProducts = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="products" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -64,17 +68,18 @@ const FeaturedProducts = () => {
         >
           <div>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-medium text-foreground italic mb-2">
-              Creațiile Noastre Vedetă
+              {t("featured.title")}
             </h2>
             <p className="text-muted-foreground">
-              Companioni moi și consolatori pentru fiecare etapă
+              {t("featured.subtitle")}
             </p>
           </div>
           <Button
+            asChild
             variant="outline"
             className="self-start md:self-auto px-6 py-5 border-foreground/20 hover:bg-foreground/5 rounded-full"
           >
-            Vezi Tot
+            <Link to="/magazin">{t("featured.viewAll")}</Link>
           </Button>
         </motion.div>
 
