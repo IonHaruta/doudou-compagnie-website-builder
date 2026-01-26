@@ -17,43 +17,43 @@ const CollectionsPage = () => {
   const collections = [
     {
       id: 1,
-      name: "Boh'aime",
-      description: t("collections.bohaime"),
+      nameKey: "collection.bohaime",
+      descriptionKey: "collections.bohaime",
       count: 24,
       image: collectionBohaime,
     },
     {
       id: 2,
-      name: "Iepuraș Floricică",
-      description: t("collections.floricica"),
+      nameKey: "collection.floricica",
+      descriptionKey: "collections.floricica",
       count: 18,
       image: collectionFloricica,
     },
     {
       id: 3,
-      name: "Marionetele",
-      description: t("collections.marionete"),
+      nameKey: "collection.marionete",
+      descriptionKey: "collections.marionete",
       count: 32,
       image: collectionMarionete,
     },
     {
       id: 4,
-      name: "Aniversare DOUDOU®",
-      description: t("collections.anniversary"),
+      nameKey: "collection.anniversary",
+      descriptionKey: "collections.anniversary",
       count: 12,
       image: collectionAnniversary,
     },
     {
       id: 5,
-      name: "Clair de Lune",
-      description: t("collections.clairLune"),
+      nameKey: "collection.clairLune",
+      descriptionKey: "collections.clairLune",
       count: 15,
       image: collectionClairLune,
     },
     {
       id: 6,
-      name: "Colecția Organică",
-      description: t("collections.organic"),
+      nameKey: "collection.organic",
+      descriptionKey: "collections.organic",
       count: 20,
       image: collectionOrganic,
     },
@@ -96,7 +96,7 @@ const CollectionsPage = () => {
                 {/* Image */}
                 <img
                   src={collection.image}
-                  alt={collection.name}
+                  alt={t(collection.nameKey)}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
@@ -106,10 +106,10 @@ const CollectionsPage = () => {
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="font-display text-2xl font-medium text-card mb-1">
-                    {collection.name}
+                    {t(collection.nameKey)}
                   </h3>
                   <p className="text-sm text-card/80 mb-3">
-                    {collection.description}
+                    {t(collection.descriptionKey)}
                   </p>
                   <div className="flex items-center gap-2 text-card/70 text-sm">
                     <span>{collection.count} {t("common.results")}</span>

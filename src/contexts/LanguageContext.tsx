@@ -187,11 +187,14 @@
    // Footer location
    "footer.location": { ro: "București, România", ru: "Бухарест, Румыния", en: "Bucharest, Romania" },
    
-   // Collection names
-   "collection.bohaime": { ro: "Boh'aime", ru: "Богема", en: "Boh'aime" },
-   "collection.floricica": { ro: "Iepuraș Floricică", ru: "Зайчик Цветочек", en: "Flower Bunny" },
-   "collection.marionete": { ro: "Marionetele", ru: "Марионетки", en: "Puppets" },
-   
+    // Collection names
+    "collection.bohaime": { ro: "Boh'aime", ru: "Богема", en: "Boh'aime" },
+    "collection.floricica": { ro: "Iepuraș Floricică", ru: "Зайчик Цветочек", en: "Flower Bunny" },
+    "collection.marionete": { ro: "Marionetele", ru: "Марионетки", en: "Puppets" },
+    "collection.anniversary": { ro: "Aniversare DOUDOU®", ru: "Юбилей DOUDOU®", en: "DOUDOU® Anniversary" },
+    "collection.clairLune": { ro: "Clair de Lune", ru: "Лунный свет", en: "Clair de Lune" },
+    "collection.organic": { ro: "Colecția Organică", ru: "Органическая коллекция", en: "Organic Collection" },
+
    // Gift Finder
    "gift.title": { ro: "Găsește Cadoul Perfect", ru: "Найдите идеальный подарок", en: "Find the Perfect Gift" },
    "gift.subtitle": { ro: "Răspunde la câteva întrebări și te ajutăm să găsești doudou-ul ideal", ru: "Ответьте на несколько вопросов, и мы поможем найти идеального дуду", en: "Answer a few questions and we'll help you find the ideal doudou" },
