@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingBag, Menu, X, User, ChevronDown, Globe, Moon, Sun } from "lucide-react";
+import { Search, ShoppingBag, Menu, X, User, ChevronDown, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -13,23 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { products } from "@/data/products";
-
-const shopCategories = [
-  { name: "Noutăți", href: "/magazin?filter=new" },
-  { name: "Cele mai vândute", href: "/magazin?filter=bestseller" },
-  { name: "Doudous", href: "/magazin?filter=doudous" },
-  { name: "Jucării de Pluș", href: "/magazin?filter=plush" },
-  { name: "Marionete", href: "/magazin?filter=puppets" },
-  { name: "Cutii Muzicale", href: "/magazin?filter=music-boxes" },
-];
-
-const navLinks = [
-  { name: "Colecții", href: "/colectii" },
-  { name: "Idei Cadouri", href: "/idei-cadouri" },
-  { name: "Povestea Noastră", href: "/povestea-noastra" },
-  { name: "Ajutor", href: "/ajutor" },
-];
 
 const languages = [
   { code: "ro" as const, name: "RO", flag: "🇷🇴" },
@@ -42,13 +27,29 @@ const Navbar = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { totalItems } = useCart();
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
 
   const currentLang = languages.find(l => l.code === language) || languages[0];
+
+  const shopCategories = [
+    { name: t("shop.new"), href: "/magazin?filter=new" },
+    { name: t("shop.bestseller"), href: "/magazin?filter=bestseller" },
+    { name: t("shop.doudous"), href: "/magazin?filter=doudous" },
+    { name: t("shop.plush"), href: "/magazin?filter=plush" },
+    { name: t("shop.puppets"), href: "/magazin?filter=puppets" },
+    { name: t("shop.musicBoxes"), href: "/magazin?filter=music-boxes" },
+  ];
+
+  const navLinks = [
+    { name: t("nav.collections"), href: "/colectii" },
+    { name: t("nav.giftIdeas"), href: "/idei-cadouri" },
+    { name: t("nav.ourStory"), href: "/povestea-noastra" },
+    { name: t("nav.help"), href: "/ajutor" },
+  ];
 
   const searchResults = searchQuery.length >= 2
     ? products.filter(p => 
@@ -94,7 +95,7 @@ const Navbar = () => {
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  Magazin
+                  {t("nav.shop")}
                   <ChevronDown className={`w-4 h-4 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
@@ -123,7 +124,7 @@ const Navbar = () => {
 
               {navLinks.map((link) => (
                 <Link
-                  key={link.name}
+                  key={link.href}
                   to={link.href}
                   className={`text-sm font-medium transition-colors duration-200 ${
                     location.pathname === link.href 
@@ -153,9 +154,9 @@ const Navbar = () => {
                 variant="ghost" 
                 size="icon" 
                 className="hidden md:flex text-muted-foreground hover:text-foreground"
-                onClick={() => setIsDarkMode(!isDarkMode)}
+                onClick={toggleTheme}
               >
-                {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </Button>
 
               {/* Language Selector */}
@@ -226,22 +227,31 @@ const Navbar = () => {
               className="md:hidden bg-background border-t border-border"
             >
               <div className="container mx-auto px-4 py-4 space-y-2">
-                {/* Language Selector Mobile */}
-                <div className="flex items-center gap-2 py-2 border-b border-border mb-2">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => setLanguage(lang.code)}
-                      className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm ${
-                        language === lang.code 
-                          ? 'bg-primary text-primary-foreground' 
-                          : 'bg-muted text-muted-foreground'
-                      }`}
-                    >
-                      <span>{lang.flag}</span>
-                      <span>{lang.name}</span>
-                    </button>
-                  ))}
+                {/* Language & Theme Mobile */}
+                <div className="flex items-center justify-between py-2 border-b border-border mb-2">
+                  <div className="flex items-center gap-2">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => setLanguage(lang.code)}
+                        className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm ${
+                          language === lang.code 
+                            ? 'bg-primary text-primary-foreground' 
+                            : 'bg-muted text-muted-foreground'
+                        }`}
+                      >
+                        <span>{lang.flag}</span>
+                        <span>{lang.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={toggleTheme}
+                  >
+                    {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  </Button>
                 </div>
 
                 {/* Shop with submenu */}
@@ -250,7 +260,7 @@ const Navbar = () => {
                     onClick={() => setIsShopOpen(!isShopOpen)}
                     className="flex items-center justify-between w-full text-base font-medium text-foreground"
                   >
-                    Magazin
+                    {t("nav.shop")}
                     <ChevronDown className={`w-4 h-4 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -278,7 +288,7 @@ const Navbar = () => {
                 
                 {navLinks.map((link) => (
                   <Link
-                    key={link.name}
+                    key={link.href}
                     to={link.href}
                     className="block text-base font-medium text-foreground py-2"
                     onClick={() => setIsMenuOpen(false)}
@@ -296,13 +306,13 @@ const Navbar = () => {
       <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Caută produse</DialogTitle>
+            <DialogTitle>{t("search.title")}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="Caută produse..."
+                placeholder={t("search.placeholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -334,7 +344,7 @@ const Navbar = () => {
             
             {searchQuery.length >= 2 && searchResults.length === 0 && (
               <p className="text-center text-muted-foreground py-8">
-                Nu s-au găsit rezultate pentru "{searchQuery}"
+                {t("search.noResults")} "{searchQuery}"
               </p>
             )}
           </div>

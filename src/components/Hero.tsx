@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@/assets/hero-nursery.jpg";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Image with Light Overlay */}
@@ -14,7 +17,7 @@ const Hero = () => {
           className="w-full h-full object-cover"
         />
         {/* Light warm overlay for soft effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cream/70 via-cream/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/50 to-transparent" />
       </div>
 
       {/* Content */}
@@ -26,7 +29,7 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="font-display text-5xl md:text-6xl lg:text-7xl font-medium text-foreground leading-tight mb-6"
           >
-            Doudous care consolează
+            {t("hero.title")}
           </motion.h1>
 
           <motion.p
@@ -35,7 +38,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-lg md:text-xl text-muted-foreground mb-8"
           >
-            Creatori de momente tandre de 25 de ani
+            {t("hero.subtitle")}
           </motion.p>
 
           <motion.div
@@ -49,7 +52,7 @@ const Hero = () => {
               size="lg" 
               className="text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
             >
-              <Link to="/magazin">Descoperă Colecția</Link>
+              <Link to="/magazin">{t("hero.cta")}</Link>
             </Button>
             <Button 
               asChild
@@ -57,7 +60,7 @@ const Hero = () => {
               size="lg" 
               className="text-base px-8 py-6 border-primary text-primary hover:bg-primary/5 rounded-full"
             >
-              <Link to="/colectii">Colecții</Link>
+              <Link to="/colectii">{t("hero.collections")}</Link>
             </Button>
           </motion.div>
         </div>
