@@ -187,9 +187,10 @@ const translations: Translations = {
   // Footer location
   "footer.location": { ro: "București, România", ru: "Бухарест, Румыния", en: "Bucharest, Romania" },
   
-  // Collection names for footer
+  // Collection names
   "collection.bohaime": { ro: "Boh'aime", ru: "Богема", en: "Boh'aime" },
   "collection.floricica": { ro: "Iepuraș Floricică", ru: "Зайчик Цветочек", en: "Flower Bunny" },
+  "collection.marionete": { ro: "Marionetele", ru: "Марионетки", en: "Puppets" },
   
   // Gift Finder
   "gift.title": { ro: "Găsește Cadoul Perfect", ru: "Найдите идеальный подарок", en: "Find the Perfect Gift" },
