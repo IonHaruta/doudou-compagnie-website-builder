@@ -12,7 +12,7 @@ const steps = [
   {
     id: 2,
     question: "Ce tip de jucărie?",
-    options: ["Pluș", "Marionetă", "Cutie muzicală", "Set cadou"],
+    options: ["Doudous", "Jucării de Pluș", "Marionete", "Cutii Muzicale"],
   },
   {
     id: 3,
@@ -35,10 +35,10 @@ const ageMapping: Record<string, string> = {
 };
 
 const typeMapping: Record<string, string> = {
-  "Pluș": "plush",
-  "Marionetă": "puppets",
-  "Cutie muzicală": "music-boxes",
-  "Set cadou": "doudous",
+  "Doudous": "doudous",
+  "Jucării de Pluș": "plush",
+  "Marionete": "puppets",
+  "Cutii Muzicale": "music-boxes",
 };
 
 const budgetMapping: Record<string, string> = {
