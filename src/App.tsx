@@ -29,7 +29,8 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/magazin" element={<ShopPage />} />
+                <Route path="/catalog" element={<ShopPage />} />
+                <Route path="/magazin" element={<ShopPage />} /> {/* Legacy redirect */}
                 <Route path="/produs/:id" element={<ProductPage />} />
                 <Route path="/cos" element={<CartPage />} />
                 <Route path="/colectii" element={<CollectionsPage />} />

@@ -4,58 +4,83 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
+// Using placeholder images - these should be replaced with actual category images
 import collectionBohaime from "@/assets/collection-bohaime.jpg";
 import collectionFloricica from "@/assets/collection-floricica.jpg";
 import collectionMarionete from "@/assets/collection-marionete.jpg";
 import collectionAnniversary from "@/assets/collection-anniversary.jpg";
 import collectionClairLune from "@/assets/collection-clair-lune.jpg";
 import collectionOrganic from "@/assets/collection-organic.jpg";
+import categoryBlankets from "@/assets/category-blankets.jpg";
+import categoryToys from "@/assets/category-toys.jpg";
+import categoryGifts from "@/assets/category-gifts.jpg";
 
 const CollectionsPage = () => {
   const { t } = useLanguage();
 
   const collections = [
     {
-      id: 1,
-      nameKey: "collection.bohaime",
-      descriptionKey: "collections.bohaime",
-      count: 24,
+      id: "crocodiles",
+      nameKey: "collection.crocodiles",
+      descriptionKey: "collections.crocodiles",
+      count: 12,
       image: collectionBohaime,
     },
     {
-      id: 2,
-      nameKey: "collection.floricica",
-      descriptionKey: "collections.floricica",
-      count: 18,
+      id: "bears",
+      nameKey: "collection.bears",
+      descriptionKey: "collections.bears",
+      count: 28,
       image: collectionFloricica,
     },
     {
-      id: 3,
-      nameKey: "collection.marionete",
-      descriptionKey: "collections.marionete",
-      count: 32,
+      id: "hippos",
+      nameKey: "collection.hippos",
+      descriptionKey: "collections.hippos",
+      count: 8,
       image: collectionMarionete,
     },
     {
-      id: 4,
-      nameKey: "collection.anniversary",
-      descriptionKey: "collections.anniversary",
-      count: 12,
+      id: "elephants",
+      nameKey: "collection.elephants",
+      descriptionKey: "collections.elephants",
+      count: 15,
       image: collectionAnniversary,
     },
     {
-      id: 5,
-      nameKey: "collection.clairLune",
-      descriptionKey: "collections.clairLune",
-      count: 15,
+      id: "puppies",
+      nameKey: "collection.puppies",
+      descriptionKey: "collections.puppies",
+      count: 18,
       image: collectionClairLune,
     },
     {
-      id: 6,
-      nameKey: "collection.organic",
-      descriptionKey: "collections.organic",
-      count: 20,
+      id: "kittens",
+      nameKey: "collection.kittens",
+      descriptionKey: "collections.kittens",
+      count: 14,
       image: collectionOrganic,
+    },
+    {
+      id: "dolls",
+      nameKey: "collection.dolls",
+      descriptionKey: "collections.dolls",
+      count: 22,
+      image: categoryGifts,
+    },
+    {
+      id: "newborn",
+      nameKey: "collection.newborn",
+      descriptionKey: "collections.newborn",
+      count: 35,
+      image: categoryToys,
+    },
+    {
+      id: "blankets",
+      nameKey: "collection.blankets",
+      descriptionKey: "collections.blankets",
+      count: 16,
+      image: categoryBlankets,
     },
   ];
 
@@ -90,7 +115,7 @@ const CollectionsPage = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link
-                to={`/colectii/${collection.id}`}
+                to={`/catalog?collection=${collection.id}`}
                 className="group relative aspect-[4/5] overflow-hidden rounded-2xl block"
               >
                 {/* Image */}

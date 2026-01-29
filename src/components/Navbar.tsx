@@ -24,7 +24,7 @@ const languages = [
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isShopOpen, setIsShopOpen] = useState(false);
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
@@ -35,13 +35,12 @@ const Navbar = () => {
 
   const currentLang = languages.find(l => l.code === language) || languages[0];
 
-  const shopCategories = [
-    { name: t("shop.new"), href: "/magazin?filter=new" },
-    { name: t("shop.bestseller"), href: "/magazin?filter=bestseller" },
-    { name: t("shop.doudous"), href: "/magazin?filter=doudous" },
-    { name: t("shop.plush"), href: "/magazin?filter=plush" },
-    { name: t("shop.puppets"), href: "/magazin?filter=puppets" },
-    { name: t("shop.musicBoxes"), href: "/magazin?filter=music-boxes" },
+  const catalogCategories = [
+    { name: t("catalog.all"), href: "/catalog" },
+    { name: t("catalog.new"), href: "/catalog?filter=new" },
+    { name: t("catalog.byAge"), href: "/catalog?filter=age" },
+    { name: t("catalog.byGender"), href: "/catalog?filter=gender" },
+    { name: t("catalog.sale"), href: "/catalog?filter=sale" },
   ];
 
   const navLinks = [
@@ -82,33 +81,33 @@ const Navbar = () => {
 
             {/* Desktop Navigation - visible from md breakpoint */}
             <div className="hidden md:flex items-center gap-6 lg:gap-8">
-              {/* Shop Dropdown */}
+              {/* Catalog Dropdown */}
               <div 
                 className="relative"
-                onMouseEnter={() => setIsShopOpen(true)}
-                onMouseLeave={() => setIsShopOpen(false)}
+                onMouseEnter={() => setIsCatalogOpen(true)}
+                onMouseLeave={() => setIsCatalogOpen(false)}
               >
                 <button
                   className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
-                    location.pathname.startsWith('/magazin') 
+                    location.pathname.startsWith('/catalog') 
                       ? 'text-foreground' 
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  {t("nav.shop")}
-                  <ChevronDown className={`w-4 h-4 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
+                  {t("nav.catalog")}
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isCatalogOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 <AnimatePresence>
-                  {isShopOpen && (
+                  {isCatalogOpen && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-48 bg-background rounded-xl shadow-lg border border-border py-2 z-50"
+                      className="absolute top-full left-0 mt-2 w-52 bg-background rounded-xl shadow-lg border border-border py-2 z-50"
                     >
-                      {shopCategories.map((category) => (
+                      {catalogCategories.map((category) => (
                         <Link
                           key={category.name}
                           to={category.href}
@@ -254,24 +253,24 @@ const Navbar = () => {
                   </Button>
                 </div>
 
-                {/* Shop with submenu */}
+                {/* Catalog with submenu */}
                 <div className="py-2">
                   <button
-                    onClick={() => setIsShopOpen(!isShopOpen)}
+                    onClick={() => setIsCatalogOpen(!isCatalogOpen)}
                     className="flex items-center justify-between w-full text-base font-medium text-foreground"
                   >
-                    {t("nav.shop")}
-                    <ChevronDown className={`w-4 h-4 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
+                    {t("nav.catalog")}
+                    <ChevronDown className={`w-4 h-4 transition-transform ${isCatalogOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
-                    {isShopOpen && (
+                    {isCatalogOpen && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         className="mt-2 pl-4 space-y-2"
                       >
-                        {shopCategories.map((category) => (
+                        {catalogCategories.map((category) => (
                           <Link
                             key={category.name}
                             to={category.href}
