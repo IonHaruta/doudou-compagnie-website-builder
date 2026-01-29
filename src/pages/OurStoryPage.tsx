@@ -31,6 +31,17 @@ const OurStoryPage = () => {
     },
   ];
 
+  const timelineEvents = [
+    { year: "1999", titleKey: "story.1999", descKey: "story.1999Desc" },
+    { year: "2000", titleKey: "story.2000", descKey: "story.2000Desc" },
+    { year: "2003", titleKey: "story.2003", descKey: "story.2003Desc" },
+    { year: "2010", titleKey: "story.2010", descKey: "story.2010Desc" },
+    { year: "2015", titleKey: "story.2015", descKey: "story.2015Desc" },
+    { year: "2018", titleKey: "story.2018", descKey: "story.2018Desc" },
+    { year: "2019", titleKey: "story.2019", descKey: "story.2019Desc" },
+    { year: "2024", titleKey: "story.2024", descKey: "story.2024Desc" },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -119,35 +130,24 @@ const OurStoryPage = () => {
             </h2>
 
             <div className="space-y-8">
-              <div className="flex gap-6">
-                <div className="w-24 flex-shrink-0 text-right">
-                  <span className="font-display text-xl font-medium text-primary">1999</span>
-                </div>
-                <div className="flex-1 pb-8 border-l-2 border-primary/20 pl-6">
-                  <h3 className="font-medium text-foreground mb-2">{t("story.1999")}</h3>
-                  <p className="text-muted-foreground">{t("story.1999Desc")}</p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-24 flex-shrink-0 text-right">
-                  <span className="font-display text-xl font-medium text-primary">2010</span>
-                </div>
-                <div className="flex-1 pb-8 border-l-2 border-primary/20 pl-6">
-                  <h3 className="font-medium text-foreground mb-2">{t("story.2010")}</h3>
-                  <p className="text-muted-foreground">{t("story.2010Desc")}</p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-24 flex-shrink-0 text-right">
-                  <span className="font-display text-xl font-medium text-primary">2024</span>
-                </div>
-                <div className="flex-1 pl-6">
-                  <h3 className="font-medium text-foreground mb-2">{t("story.2024")}</h3>
-                  <p className="text-muted-foreground">{t("story.2024Desc")}</p>
-                </div>
-              </div>
+              {timelineEvents.map((event, index) => (
+                <motion.div
+                  key={event.year}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex gap-6"
+                >
+                  <div className="w-24 flex-shrink-0 text-right">
+                    <span className="font-display text-xl font-medium text-primary">{event.year}</span>
+                  </div>
+                  <div className={`flex-1 pl-6 ${index < timelineEvents.length - 1 ? 'pb-8 border-l-2 border-primary/20' : ''}`}>
+                    <h3 className="font-medium text-foreground mb-2">{t(event.titleKey)}</h3>
+                    <p className="text-muted-foreground">{t(event.descKey)}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>

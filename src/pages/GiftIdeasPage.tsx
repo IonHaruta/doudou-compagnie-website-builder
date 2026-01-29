@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Sparkles, Gift, Package } from "lucide-react";
+import { Heart, Sparkles, Gift, Package, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import productPinkBunny from "@/assets/product-pink-bunny.jpg";
 import productGreyBear from "@/assets/product-grey-bear.jpg";
@@ -23,6 +24,7 @@ const giftProducts = [
     badge: "bestseller" as const,
     stock: "in-stock" as const,
     occasion: "birth",
+    ageRange: "0-6",
   },
   {
     id: 2,
@@ -32,6 +34,7 @@ const giftProducts = [
     badge: "bestseller" as const,
     stock: "in-stock" as const,
     occasion: "birth",
+    ageRange: "0-6",
   },
   {
     id: 3,
@@ -41,6 +44,7 @@ const giftProducts = [
     badge: "new" as const,
     stock: "in-stock" as const,
     occasion: "baptism",
+    ageRange: "0-6",
   },
   {
     id: 4,
@@ -50,6 +54,7 @@ const giftProducts = [
     badge: "new" as const,
     stock: "in-stock" as const,
     occasion: "baptism",
+    ageRange: "6-12",
   },
   {
     id: 5,
@@ -59,6 +64,7 @@ const giftProducts = [
     badge: "bestseller" as const,
     stock: "in-stock" as const,
     occasion: "birthday",
+    ageRange: "6-12",
   },
   {
     id: 6,
@@ -68,6 +74,7 @@ const giftProducts = [
     badge: "new" as const,
     stock: "in-stock" as const,
     occasion: "birthday",
+    ageRange: "1-3",
   },
   {
     id: 7,
@@ -77,6 +84,7 @@ const giftProducts = [
     badge: "bestseller" as const,
     stock: "limited" as const,
     occasion: "gift-sets",
+    ageRange: "1-3",
   },
   {
     id: 8,
@@ -86,11 +94,13 @@ const giftProducts = [
     badge: "new" as const,
     stock: "in-stock" as const,
     occasion: "gift-sets",
+    ageRange: "3+",
   },
 ];
 
 const GiftIdeasPage = () => {
   const [selectedOccasion, setSelectedOccasion] = useState<string | null>(null);
+  const [selectedAge, setSelectedAge] = useState<string | null>(null);
   const { t } = useLanguage();
 
   const occasions = [
@@ -120,17 +130,42 @@ const GiftIdeasPage = () => {
     },
   ];
 
+  const ageRanges = [
+    { id: "0-6", label: t("age.0-6") },
+    { id: "6-12", label: t("age.6-12") },
+    { id: "1-3", label: t("age.1-3") },
+    { id: "3+", label: t("age.3+") },
+  ];
+
   const filteredProducts = useMemo(() => {
-    if (!selectedOccasion) {
-      return giftProducts;
-    }
-    return giftProducts.filter((product) => product.occasion === selectedOccasion);
-  }, [selectedOccasion]);
+    return giftProducts.filter((product) => {
+      const matchesOccasion = !selectedOccasion || product.occasion === selectedOccasion;
+      const matchesAge = !selectedAge || product.ageRange === selectedAge;
+      return matchesOccasion && matchesAge;
+    });
+  }, [selectedOccasion, selectedAge]);
+
+  const hasActiveFilters = selectedOccasion || selectedAge;
+
+  const clearFilters = () => {
+    setSelectedOccasion(null);
+    setSelectedAge(null);
+  };
 
   const getSectionTitle = () => {
-    if (!selectedOccasion) return t("giftIdeas.allGifts");
-    const occasion = occasions.find((o) => o.id === selectedOccasion);
-    return occasion ? `${t("giftIdeas.giftsFor")} ${occasion.title}` : t("nav.giftIdeas");
+    if (!selectedOccasion && !selectedAge) return t("giftIdeas.allGifts");
+    
+    const parts = [];
+    if (selectedOccasion) {
+      const occasion = occasions.find((o) => o.id === selectedOccasion);
+      if (occasion) parts.push(occasion.title);
+    }
+    if (selectedAge) {
+      const age = ageRanges.find((a) => a.id === selectedAge);
+      if (age) parts.push(age.label);
+    }
+    
+    return `${t("giftIdeas.giftsFor")} ${parts.join(" • ")}`;
   };
 
   return (
@@ -153,42 +188,89 @@ const GiftIdeasPage = () => {
         </div>
       </div>
 
-      {/* Occasions */}
-      <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-          {occasions.map((occasion, index) => (
-            <motion.button
-              key={occasion.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              onClick={() => setSelectedOccasion(
-                selectedOccasion === occasion.id ? null : occasion.id
-              )}
-              className={`p-6 rounded-2xl border-2 text-center transition-all ${
-                selectedOccasion === occasion.id
-                  ? 'border-primary bg-primary/5'
-                  : 'border-border hover:border-primary/50 bg-card'
-              }`}
-            >
-              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-soft-pink flex items-center justify-center">
-                <occasion.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-display text-lg font-medium text-foreground mb-1">
-                {occasion.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {occasion.description}
-              </p>
-            </motion.button>
-          ))}
+      {/* Filters Section */}
+      <div className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
+        {/* Occasion Filter */}
+        <div className="mb-8">
+          <h3 className="text-sm font-medium text-muted-foreground mb-4">
+            {t("giftIdeas.filterByOccasion")}
+          </h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {occasions.map((occasion, index) => (
+              <motion.button
+                key={occasion.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                onClick={() => setSelectedOccasion(
+                  selectedOccasion === occasion.id ? null : occasion.id
+                )}
+                className={`p-5 rounded-2xl border-2 text-center transition-all ${
+                  selectedOccasion === occasion.id
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border hover:border-primary/50 bg-card'
+                }`}
+              >
+                <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-soft-pink flex items-center justify-center">
+                  <occasion.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h4 className="font-display text-base font-medium text-foreground mb-1">
+                  {occasion.title}
+                </h4>
+                <p className="text-xs text-muted-foreground">
+                  {occasion.description}
+                </p>
+              </motion.button>
+            ))}
+          </div>
         </div>
+
+        {/* Age Filter */}
+        <div className="mb-8">
+          <h3 className="text-sm font-medium text-muted-foreground mb-4">
+            {t("giftIdeas.filterByAge")}
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {ageRanges.map((age) => (
+              <button
+                key={age.id}
+                onClick={() => setSelectedAge(selectedAge === age.id ? null : age.id)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                  selectedAge === age.id
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                {age.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Clear Filters */}
+        {hasActiveFilters && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-8"
+          >
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={clearFilters}
+              className="gap-2"
+            >
+              <X className="w-4 h-4" />
+              {t("giftIdeas.clearFilters")}
+            </Button>
+          </motion.div>
+        )}
       </div>
 
       {/* Gift Ideas Products */}
       <div className="container mx-auto px-4 lg:px-8 pb-16">
         <motion.div
-          key={selectedOccasion || "all"}
+          key={`${selectedOccasion}-${selectedAge}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
@@ -236,7 +318,7 @@ const GiftIdeasPage = () => {
               {t("giftIdeas.noProducts")}
             </p>
             <button
-              onClick={() => setSelectedOccasion(null)}
+              onClick={clearFilters}
               className="mt-4 text-primary hover:underline"
             >
               {t("giftIdeas.showAll")}
