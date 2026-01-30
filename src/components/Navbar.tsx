@@ -39,7 +39,6 @@ const Navbar = () => {
     { name: t("catalog.all"), href: "/catalog?reset=true" },
     { name: t("catalog.new"), href: "/catalog?filter=new" },
     { name: t("catalog.byAge"), href: "/catalog?filter=age" },
-    { name: t("catalog.byGender"), href: "/catalog?filter=gender" },
     { name: t("catalog.sale"), href: "/catalog?filter=sale" },
   ];
 
