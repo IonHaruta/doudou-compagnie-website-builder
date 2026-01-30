@@ -79,7 +79,7 @@ const FeaturedProducts = () => {
             variant="outline"
             className="self-start md:self-auto px-6 py-5 border-foreground/20 hover:bg-foreground/5 rounded-full"
           >
-            <Link to="/magazin">{t("featured.viewAll")}</Link>
+            <Link to="/catalog">{t("featured.viewAll")}</Link>
           </Button>
         </motion.div>
 

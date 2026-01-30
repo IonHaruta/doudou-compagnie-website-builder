@@ -13,10 +13,11 @@ export interface Product {
   nameKey: string; // Translation key for name
   descriptionKey: string; // Translation key for description
   price: number;
+  originalPrice?: number; // Original price before discount
   image: string;
-  badge?: "bestseller" | "new";
+  badge?: "bestseller" | "new" | "sale";
   stock: "in-stock" | "limited" | "out-of-stock";
-  type: string;
+  collection: string; // Collection category
   ageRange: string;
   color: string;
   reviews?: number;
@@ -32,7 +33,7 @@ export const products: Product[] = [
     image: productPinkBunny,
     badge: "bestseller",
     stock: "in-stock",
-    type: "doudous",
+    collection: "bears",
     ageRange: "0-6",
     color: "roz",
     reviews: 18,
@@ -46,7 +47,7 @@ export const products: Product[] = [
     image: productGreyBear,
     badge: "new",
     stock: "in-stock",
-    type: "plush",
+    collection: "bears",
     ageRange: "6-12",
     color: "gri",
     reviews: 24,
@@ -56,11 +57,12 @@ export const products: Product[] = [
     id: 3,
     nameKey: "product.wolfPuppet",
     descriptionKey: "product.wolfPuppet.desc",
-    price: 19.90,
+    price: 14.90,
+    originalPrice: 19.90,
     image: productWolf,
-    badge: "bestseller",
+    badge: "sale",
     stock: "limited",
-    type: "puppets",
+    collection: "puppies",
     ageRange: "1-3",
     color: "gri",
     reviews: 12,
@@ -74,7 +76,7 @@ export const products: Product[] = [
     image: productMusicBox,
     badge: "new",
     stock: "in-stock",
-    type: "music-boxes",
+    collection: "newborn",
     ageRange: "0-6",
     color: "bej",
     reviews: 31,
@@ -84,11 +86,12 @@ export const products: Product[] = [
     id: 5,
     nameKey: "product.deer",
     descriptionKey: "product.deer.desc",
-    price: 27.90,
+    price: 22.90,
+    originalPrice: 27.90,
     image: productDeer,
-    badge: "new",
+    badge: "sale",
     stock: "in-stock",
-    type: "doudous",
+    collection: "kittens",
     ageRange: "0-6",
     color: "bej",
     reviews: 15,
@@ -102,7 +105,7 @@ export const products: Product[] = [
     image: productBunny,
     badge: "bestseller",
     stock: "in-stock",
-    type: "doudous",
+    collection: "dolls",
     ageRange: "0-6",
     color: "roz",
     reviews: 27,
@@ -116,7 +119,7 @@ export const products: Product[] = [
     image: productElephant,
     badge: "new",
     stock: "in-stock",
-    type: "plush",
+    collection: "elephants",
     ageRange: "6-12",
     color: "albastru",
     reviews: 9,
@@ -130,7 +133,7 @@ export const products: Product[] = [
     image: productBear,
     badge: "bestseller",
     stock: "limited",
-    type: "doudous",
+    collection: "bears",
     ageRange: "3+",
     color: "bej",
     reviews: 42,
@@ -140,10 +143,12 @@ export const products: Product[] = [
     id: 9,
     nameKey: "product.puppy",
     descriptionKey: "product.puppy.desc",
-    price: 15.90,
+    price: 12.90,
+    originalPrice: 15.90,
     image: productPuppy,
+    badge: "sale",
     stock: "in-stock",
-    type: "plush",
+    collection: "puppies",
     ageRange: "1-3",
     color: "bej",
     reviews: 8,
@@ -151,11 +156,16 @@ export const products: Product[] = [
   },
 ];
 
-export const productTypes = [
-  { id: "doudous", labelKey: "productType.doudous" },
-  { id: "plush", labelKey: "productType.plush" },
-  { id: "puppets", labelKey: "productType.puppets" },
-  { id: "music-boxes", labelKey: "productType.musicBoxes" },
+export const collections = [
+  { id: "crocodiles", labelKey: "collection.crocodiles" },
+  { id: "bears", labelKey: "collection.bears" },
+  { id: "hippos", labelKey: "collection.hippos" },
+  { id: "elephants", labelKey: "collection.elephants" },
+  { id: "puppies", labelKey: "collection.puppies" },
+  { id: "kittens", labelKey: "collection.kittens" },
+  { id: "dolls", labelKey: "collection.dolls" },
+  { id: "newborn", labelKey: "collection.newborn" },
+  { id: "blankets", labelKey: "collection.blankets" },
 ];
 
 export const budgetRanges = [

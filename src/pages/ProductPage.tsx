@@ -38,7 +38,7 @@ const ProductPage = () => {
   const productName = t(product.nameKey);
 
   const relatedProducts = products
-    .filter((p) => p.type === product.type && p.id !== product.id)
+    .filter((p) => p.collection === product.collection && p.id !== product.id)
     .slice(0, 4);
 
   const stockLabels = {
@@ -50,6 +50,7 @@ const ProductPage = () => {
   const badgeLabels = {
     bestseller: { text: t("common.bestseller"), bg: "bg-primary" },
     new: { text: t("common.new"), bg: "bg-sage-green" },
+    sale: { text: t("common.sale"), bg: "bg-destructive" },
   };
 
   const handleAddToCart = () => {
@@ -238,6 +239,7 @@ const ProductPage = () => {
                 id={p.id}
                 nameKey={p.nameKey}
                 price={p.price}
+                originalPrice={p.originalPrice}
                 image={p.image}
                 badge={p.badge}
                 stock={p.stock}

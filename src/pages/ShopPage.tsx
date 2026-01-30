@@ -7,30 +7,33 @@ import ProductCard from "@/components/ProductCard";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
-import { products, productTypes, budgetRanges, ageRanges, colorOptions } from "@/data/products";
+import { products, collections, budgetRanges, ageRanges, colorOptions } from "@/data/products";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ShopPage = () => {
   const [searchParams] = useSearchParams();
   const [gridSize, setGridSize] = useState<2 | 3 | 4>(3);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
   const [selectedBudgets, setSelectedBudgets] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [showSaleOnly, setShowSaleOnly] = useState(false);
   const [sortBy, setSortBy] = useState("newest");
   const { t } = useLanguage();
 
-  // Apply filters from URL params (from GiftFinder)
+  // Apply filters from URL params (from GiftFinder or Collections)
   useEffect(() => {
     const ageParam = searchParams.get("age");
-    const typeParam = searchParams.get("type");
+    const collectionParam = searchParams.get("collection");
     const budgetParam = searchParams.get("budget");
     const colorParam = searchParams.get("color");
+    const filterParam = searchParams.get("filter");
 
     if (ageParam) setSelectedAges([ageParam]);
-    if (typeParam) setSelectedTypes([typeParam]);
+    if (collectionParam) setSelectedCollections([collectionParam]);
     if (budgetParam) setSelectedBudgets([budgetParam]);
     if (colorParam) setSelectedColors([colorParam]);
+    if (filterParam === "sale") setShowSaleOnly(true);
   }, [searchParams]);
 
   const toggleFilter = (
@@ -48,9 +51,14 @@ const ShopPage = () => {
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
-    // Filter by type
-    if (selectedTypes.length > 0) {
-      result = result.filter((p) => selectedTypes.includes(p.type));
+    // Filter by collection
+    if (selectedCollections.length > 0) {
+      result = result.filter((p) => selectedCollections.includes(p.collection));
+    }
+
+    // Filter by sale
+    if (showSaleOnly) {
+      result = result.filter((p) => p.badge === "sale");
     }
 
     // Filter by budget
@@ -92,7 +100,7 @@ const ShopPage = () => {
     }
 
     return result;
-  }, [selectedTypes, selectedBudgets, selectedAges, selectedColors, sortBy]);
+  }, [selectedCollections, selectedBudgets, selectedAges, selectedColors, showSaleOnly, sortBy]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -124,17 +132,28 @@ const ShopPage = () => {
                 <h3 className="font-display text-lg font-medium text-foreground mb-4">{t("shop.filters")}</h3>
               </div>
 
-              {/* Product Type */}
+              {/* Sale Filter */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">{t("shop.productType")}</h4>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={showSaleOnly}
+                    onCheckedChange={(checked) => setShowSaleOnly(checked === true)}
+                  />
+                  <span className="text-sm font-medium text-destructive">{t("shop.saleOnly")}</span>
+                </label>
+              </div>
+
+              {/* Collections */}
+              <div>
+                <h4 className="text-sm font-medium text-foreground mb-3">{t("shop.collections")}</h4>
                 <div className="space-y-2">
-                  {productTypes.map((type) => (
-                    <label key={type.id} className="flex items-center gap-2 cursor-pointer">
+                  {collections.map((collection) => (
+                    <label key={collection.id} className="flex items-center gap-2 cursor-pointer">
                       <Checkbox
-                        checked={selectedTypes.includes(type.id)}
-                        onCheckedChange={() => toggleFilter(type.id, selectedTypes, setSelectedTypes)}
+                        checked={selectedCollections.includes(collection.id)}
+                        onCheckedChange={() => toggleFilter(collection.id, selectedCollections, setSelectedCollections)}
                       />
-                      <span className="text-sm text-muted-foreground">{t(type.labelKey)}</span>
+                      <span className="text-sm text-muted-foreground">{t(collection.labelKey)}</span>
                     </label>
                   ))}
                 </div>
@@ -252,6 +271,7 @@ const ShopPage = () => {
                       id={product.id}
                       nameKey={product.nameKey}
                       price={product.price}
+                      originalPrice={product.originalPrice}
                       image={product.image}
                       badge={product.badge}
                       stock={product.stock}
@@ -272,10 +292,11 @@ const ShopPage = () => {
                 </p>
                 <button
                   onClick={() => {
-                    setSelectedTypes([]);
+                    setSelectedCollections([]);
                     setSelectedBudgets([]);
                     setSelectedAges([]);
                     setSelectedColors([]);
+                    setShowSaleOnly(false);
                   }}
                   className="mt-4 text-primary hover:underline"
                 >
