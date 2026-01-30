@@ -20,9 +20,18 @@ export interface Product {
   collection: string; // Collection category
   ageRange: string;
   color: string;
+  gender: "boy" | "girl" | "unisex"; // Target gender
   reviews?: number;
   rating?: number;
 }
+
+// Age range order for sorting
+export const ageRangeOrder: Record<string, number> = {
+  "0-6": 0,
+  "6-12": 1,
+  "1-3": 2,
+  "3+": 3,
+};
 
 export const products: Product[] = [
   {
@@ -36,6 +45,7 @@ export const products: Product[] = [
     collection: "bears",
     ageRange: "0-6",
     color: "roz",
+    gender: "girl",
     reviews: 18,
     rating: 4.8,
   },
@@ -50,6 +60,7 @@ export const products: Product[] = [
     collection: "bears",
     ageRange: "6-12",
     color: "gri",
+    gender: "unisex",
     reviews: 24,
     rating: 4.9,
   },
@@ -65,6 +76,7 @@ export const products: Product[] = [
     collection: "puppies",
     ageRange: "1-3",
     color: "gri",
+    gender: "boy",
     reviews: 12,
     rating: 4.7,
   },
@@ -79,6 +91,7 @@ export const products: Product[] = [
     collection: "newborn",
     ageRange: "0-6",
     color: "bej",
+    gender: "unisex",
     reviews: 31,
     rating: 5.0,
   },
@@ -94,6 +107,7 @@ export const products: Product[] = [
     collection: "kittens",
     ageRange: "0-6",
     color: "bej",
+    gender: "unisex",
     reviews: 15,
     rating: 4.6,
   },
@@ -108,6 +122,7 @@ export const products: Product[] = [
     collection: "dolls",
     ageRange: "0-6",
     color: "roz",
+    gender: "girl",
     reviews: 27,
     rating: 4.9,
   },
@@ -122,6 +137,7 @@ export const products: Product[] = [
     collection: "elephants",
     ageRange: "6-12",
     color: "albastru",
+    gender: "boy",
     reviews: 9,
     rating: 4.8,
   },
@@ -136,6 +152,7 @@ export const products: Product[] = [
     collection: "bears",
     ageRange: "3+",
     color: "bej",
+    gender: "unisex",
     reviews: 42,
     rating: 5.0,
   },
@@ -151,6 +168,7 @@ export const products: Product[] = [
     collection: "puppies",
     ageRange: "1-3",
     color: "bej",
+    gender: "boy",
     reviews: 8,
     rating: 4.5,
   },

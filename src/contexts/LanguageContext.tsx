@@ -23,6 +23,8 @@ const translations: Translations = {
   "catalog.new": { ro: "Produse Noi", ru: "Новинки", en: "New Products" },
   "catalog.byAge": { ro: "După Vârstă", ru: "По возрасту", en: "By Age" },
   "catalog.byGender": { ro: "Pentru Băieți / Fete", ru: "Для мальчиков / Девочек", en: "For Boys / Girls" },
+  "catalog.forBoys": { ro: "Pentru Băieți", ru: "Для мальчиков", en: "For Boys" },
+  "catalog.forGirls": { ro: "Pentru Fete", ru: "Для девочек", en: "For Girls" },
   "catalog.sale": { ro: "Reduceri", ru: "Скидки", en: "Sale" },
   
   // Shop categories (legacy support)

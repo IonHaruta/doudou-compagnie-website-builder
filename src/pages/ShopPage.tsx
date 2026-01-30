@@ -7,7 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
-import { products, collections, budgetRanges, ageRanges, colorOptions } from "@/data/products";
+import { products, collections, budgetRanges, ageRanges, colorOptions, ageRangeOrder } from "@/data/products";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ShopPage = () => {
@@ -18,6 +18,9 @@ const ShopPage = () => {
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [showSaleOnly, setShowSaleOnly] = useState(false);
+  const [showNewOnly, setShowNewOnly] = useState(false);
+  const [selectedGender, setSelectedGender] = useState<"boy" | "girl" | null>(null);
+  const [sortByAge, setSortByAge] = useState(false);
   const [sortBy, setSortBy] = useState("newest");
   const { t } = useLanguage();
 
@@ -28,12 +31,17 @@ const ShopPage = () => {
     const budgetParam = searchParams.get("budget");
     const colorParam = searchParams.get("color");
     const filterParam = searchParams.get("filter");
+    const genderParam = searchParams.get("gender");
 
     if (ageParam) setSelectedAges([ageParam]);
     if (collectionParam) setSelectedCollections([collectionParam]);
     if (budgetParam) setSelectedBudgets([budgetParam]);
     if (colorParam) setSelectedColors([colorParam]);
     if (filterParam === "sale") setShowSaleOnly(true);
+    if (filterParam === "new") setShowNewOnly(true);
+    if (filterParam === "age") setSortByAge(true);
+    if (genderParam === "boy") setSelectedGender("boy");
+    if (genderParam === "girl") setSelectedGender("girl");
   }, [searchParams]);
 
   const toggleFilter = (
@@ -61,6 +69,16 @@ const ShopPage = () => {
       result = result.filter((p) => p.badge === "sale");
     }
 
+    // Filter by new products
+    if (showNewOnly) {
+      result = result.filter((p) => p.badge === "new");
+    }
+
+    // Filter by gender
+    if (selectedGender) {
+      result = result.filter((p) => p.gender === selectedGender || p.gender === "unisex");
+    }
+
     // Filter by budget
     if (selectedBudgets.length > 0) {
       result = result.filter((p) => {
@@ -82,7 +100,13 @@ const ShopPage = () => {
       result = result.filter((p) => selectedColors.includes(p.color));
     }
 
-    // Sort
+    // Sort by age (ascending: newborn to 3+)
+    if (sortByAge) {
+      result.sort((a, b) => (ageRangeOrder[a.ageRange] || 0) - (ageRangeOrder[b.ageRange] || 0));
+      return result;
+    }
+
+    // Regular sort
     switch (sortBy) {
       case "price-asc":
         result.sort((a, b) => a.price - b.price);
@@ -100,7 +124,7 @@ const ShopPage = () => {
     }
 
     return result;
-  }, [selectedCollections, selectedBudgets, selectedAges, selectedColors, showSaleOnly, sortBy]);
+  }, [selectedCollections, selectedBudgets, selectedAges, selectedColors, showSaleOnly, showNewOnly, selectedGender, sortByAge, sortBy]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,14 +156,42 @@ const ShopPage = () => {
                 <h3 className="font-display text-lg font-medium text-foreground mb-4">{t("shop.filters")}</h3>
               </div>
 
-              {/* Sale Filter */}
-              <div>
+              {/* Quick Filters */}
+              <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <Checkbox
                     checked={showSaleOnly}
                     onCheckedChange={(checked) => setShowSaleOnly(checked === true)}
                   />
                   <span className="text-sm text-muted-foreground">{t("catalog.sale")}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={showNewOnly}
+                    onCheckedChange={(checked) => setShowNewOnly(checked === true)}
+                  />
+                  <span className="text-sm text-muted-foreground">{t("catalog.new")}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={selectedGender === "boy"}
+                    onCheckedChange={(checked) => setSelectedGender(checked ? "boy" : null)}
+                  />
+                  <span className="text-sm text-muted-foreground">{t("catalog.forBoys")}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={selectedGender === "girl"}
+                    onCheckedChange={(checked) => setSelectedGender(checked ? "girl" : null)}
+                  />
+                  <span className="text-sm text-muted-foreground">{t("catalog.forGirls")}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={sortByAge}
+                    onCheckedChange={(checked) => setSortByAge(checked === true)}
+                  />
+                  <span className="text-sm text-muted-foreground">{t("catalog.byAge")}</span>
                 </label>
               </div>
 
@@ -297,6 +349,9 @@ const ShopPage = () => {
                     setSelectedAges([]);
                     setSelectedColors([]);
                     setShowSaleOnly(false);
+                    setShowNewOnly(false);
+                    setSelectedGender(null);
+                    setSortByAge(false);
                   }}
                   className="mt-4 text-primary hover:underline"
                 >
