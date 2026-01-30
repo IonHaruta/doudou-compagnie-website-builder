@@ -115,7 +115,7 @@ const ShopPage = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display text-4xl md:text-5xl font-medium text-foreground mb-2">
-              {t("nav.shop")}
+              {t("shop.allProducts")}
             </h1>
             <p className="text-muted-foreground">{filteredProducts.length} {t("shop.results")}</p>
           </motion.div>
@@ -139,7 +139,7 @@ const ShopPage = () => {
                     checked={showSaleOnly}
                     onCheckedChange={(checked) => setShowSaleOnly(checked === true)}
                   />
-                  <span className="text-sm font-medium text-destructive">{t("shop.saleOnly")}</span>
+                  <span className="text-sm text-muted-foreground">{t("catalog.sale")}</span>
                 </label>
               </div>
 

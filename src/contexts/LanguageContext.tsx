@@ -189,7 +189,7 @@ const translations: Translations = {
   
   // Shop filters
   "shop.collections": { ro: "Colecții", ru: "Коллекции", en: "Collections" },
-  "shop.saleOnly": { ro: "Doar Reduceri", ru: "Только скидки", en: "Sale Only" },
+  "shop.allProducts": { ro: "Toate produsele noastre", ru: "Все наши товары", en: "All our products" },
   
   // Why Choose Us
   "why.title": { ro: "De ce să ne alegi pe noi?", ru: "Почему выбирают нас?", en: "Why Choose Us?" },
@@ -263,40 +263,40 @@ const translations: Translations = {
   "occasion.giftSetsDesc": { ro: "Tot într-unul, gata de oferit", ru: "Всё в одном, готово к подарку", en: "All-in-one, ready to gift" },
   
   // Our Story Page - Updated with real company history
-  "story.title": { ro: "Povestea Noastra", ru: "Наша история", en: "Our Story" },
+  "story.title": { ro: "Povestea Noastră", ru: "Наша история", en: "Our Story" },
   "story.intro": { 
-    ro: "Fa din viata ta un vis, si dintr-un vis, o realitate. Pasionat de universul jucariilor in care a crescut, Alain Joly a decis sa revolutioneze acest sector fondand Doudou et Compagnie in 1999.",
+    ro: "Fă din viața ta un vis, și dintr-un vis, o realitate. Pasionat de universul jucăriilor în care a crescut, Alain Joly a decis să revoluționeze acest sector fondând Doudou et Compagnie în 1999.",
     ru: "Сделай свою жизнь мечтой, а мечту реальностью. Увлеченный миром игрушек, в котором вырос, Ален Жоли решил революционизировать эту индустрию, основав Doudou et Compagnie в 1999 году.",
     en: "Make your life a dream, and a dream, a reality. Passionate about the toy universe in which he grew up, Alain Joly decided to revolutionize this sector by founding Doudou et Compagnie in 1999."
   },
   "story.values": { ro: "Valorile Noastre", ru: "Наши ценности", en: "Our Values" },
-  "story.history": { ro: "Istoria Noastra", ru: "Наша история", en: "Our History" },
-  "story.frenchDesign": { ro: "Design Frantuzesc", ru: "Французский дизайн", en: "French Design" },
-  "story.frenchDesignDesc": { ro: "Creat si conceput in atelierele noastre pariziene", ru: "Создано и разработано в наших парижских мастерских", en: "Created and designed in our Parisian workshops" },
+  "story.history": { ro: "Istoria Noastră", ru: "Наша история", en: "Our History" },
+  "story.frenchDesign": { ro: "Design Franțuzesc", ru: "Французский дизайн", en: "French Design" },
+  "story.frenchDesignDesc": { ro: "Creat și conceput în atelierele noastre pariziene", ru: "Создано и разработано в наших парижских мастерских", en: "Created and designed in our Parisian workshops" },
   "story.quality": { ro: "Calitate", ru: "Качество", en: "Quality" },
-  "story.qualityDesc": { ro: "Materiale premium, durabile si certificate", ru: "Премиум материалы, прочные и сертифицированные", en: "Premium materials, durable and certified" },
-  "story.safety": { ro: "Siguranta", ru: "Безопасность", en: "Safety" },
+  "story.qualityDesc": { ro: "Materiale premium, durabile și certificate", ru: "Премиум материалы, прочные и сертифицированные", en: "Premium materials, durable and certified" },
+  "story.safety": { ro: "Siguranță", ru: "Безопасность", en: "Safety" },
   "story.safetyDesc": { ro: "Teste riguroase, standarde europene EN71", ru: "Тщательное тестирование, европейские стандарты EN71", en: "Rigorous testing, European EN71 standards" },
   "story.ecoFriendly": { ro: "Eco-friendly", ru: "Экологичность", en: "Eco-friendly" },
-  "story.ecoFriendlyDesc": { ro: "Angajati pentru planeta si viitorul copiilor", ru: "Забота о планете и будущем детей", en: "Committed to the planet and children's future" },
+  "story.ecoFriendlyDesc": { ro: "Angajați pentru planetă și viitorul copiilor", ru: "Забота о планете и будущем детей", en: "Committed to the planet and children's future" },
   
   // Timeline entries based on real company history
   "story.1999": { ro: "Fondarea Doudou et Compagnie", ru: "Основание Doudou et Compagnie", en: "Founding of Doudou et Compagnie" },
-  "story.1999Desc": { ro: "Alain Joly fondeaza compania in Val d Oise, Franta, alaturi de echipa sa talentata, inclusiv Zora - stilistul si mama echipei.", ru: "Ален Жоли основывает компанию в Валь-д Уаз, Франция, вместе со своей талантливой командой, включая Зору стилиста и маму команды.", en: "Alain Joly founds the company in Val d Oise, France, alongside his talented team, including Zora - the stylist and mom of the team." },
-  "story.2000": { ro: "Nasterea Primului DOUDOU", ru: "Рождение первого DOUDOU", en: "Birth of the First DOUDOU" },
-  "story.2000Desc": { ro: "Zora coase un mic cap de iepure de plus pe langoul nou-nascutului sau. Asa s-a nascut primul Doudou fara umplutura - o revolutie in lumea jucariilor pentru copii.", ru: "Зора пришивает маленькую плюшевую голову зайчика к пеленке своего новорожденного. Так родился первый Дуду без наполнителя революция в мире детских игрушек.", en: "Zora sews a small plush rabbit head onto her newborns blanket. Thus was born the first unstuffed Doudou - a revolution in the world of childrens toys." },
-  "story.2003": { ro: "Doudou-Marioneta", ru: "Дуду-Марионетка", en: "Doudou-Puppet" },
-  "story.2003Desc": { ro: "Inspirata de succesul Doudou-urilor, marca creeaza Doudou-Marioneta pentru povesti magice intre parinti si copii.", ru: "Вдохновленный успехом Дуду, бренд создает Дуду-Марионетку для волшебных историй между родителями и детьми.", en: "Inspired by the success of Doudous, the brand creates the Doudou-Puppet for magical stories between parents and children." },
+  "story.1999Desc": { ro: "Alain Joly fondează compania în Val d'Oise, Franța, alături de echipa sa talentată, inclusiv Zora - stilistul și mama echipei.", ru: "Ален Жоли основывает компанию в Валь-д Уаз, Франция, вместе со своей талантливой командой, включая Зору стилиста и маму команды.", en: "Alain Joly founds the company in Val d'Oise, France, alongside his talented team, including Zora - the stylist and mom of the team." },
+  "story.2000": { ro: "Nașterea Primului DOUDOU", ru: "Рождение первого DOUDOU", en: "Birth of the First DOUDOU" },
+  "story.2000Desc": { ro: "Zora coase un mic cap de iepure de pluș pe lângoul nou-născutului său. Așa s-a născut primul Doudou fără umplutură - o revoluție în lumea jucăriilor pentru copii.", ru: "Зора пришивает маленькую плюшевую голову зайчика к пеленке своего новорожденного. Так родился первый Дуду без наполнителя революция в мире детских игрушек.", en: "Zora sews a small plush rabbit head onto her newborn's blanket. Thus was born the first unstuffed Doudou - a revolution in the world of children's toys." },
+  "story.2003": { ro: "Doudou-Marionetă", ru: "Дуду-Марионетка", en: "Doudou-Puppet" },
+  "story.2003Desc": { ro: "Inspirată de succesul Doudou-urilor, marca creează Doudou-Marioneta pentru povești magice între părinți și copii.", ru: "Вдохновленный успехом Дуду, бренд создает Дуду-Марионетку для волшебных историй между родителями и детьми.", en: "Inspired by the success of Doudous, the brand creates the Doudou-Puppet for magical stories between parents and children." },
   "story.2010": { ro: "Lapin Bonbon - Un Cult", ru: "Lapin Bonbon Культовая коллекция", en: "Lapin Bonbon - A Cult Classic" },
-  "story.2010Desc": { ro: "Succes imediat pentru aceste irezistibile bile de tandrete, apreciate pentru extrema lor moliciune.", ru: "Мгновенный успех этих неотразимых шариков нежности, ценимых за их невероятную мягкость.", en: "Immediate success for these irresistible balls of tenderness, appreciated for their extreme softness." },
+  "story.2010Desc": { ro: "Succes imediat pentru aceste irezistibile bile de tandrețe, apreciate pentru extrema lor moliciune.", ru: "Мгновенный успех этих неотразимых шариков нежности, ценимых за их невероятную мягкость.", en: "Immediate success for these irresistible balls of tenderness, appreciated for their extreme softness." },
   "story.2015": { ro: "Parteneriat cu UNICEF", ru: "Партнерство с UNICEF", en: "UNICEF Partnership" },
-  "story.2015Desc": { ro: "Doudou et Compagnie se angajeaza alaturi de UNICEF, donand 1 euro pentru fiecare Doudou solidar achizitionat.", ru: "Doudou et Compagnie присоединяется к UNICEF, жертвуя 1 евро за каждый проданный солидарный Дуду.", en: "Doudou et Compagnie commits to UNICEF, donating 1 euro for each solidarity Doudou purchased." },
-  "story.2018": { ro: "Garantia Doudou", ru: "Гарантия Doudou", en: "Doudou Guarantee" },
-  "story.2018Desc": { ro: "Un serviciu exceptional: Doudou pierdut - gasit rapid, Doudou deteriorat - reparat, Doudou de negasit - refabricat!", ru: "Исключительный сервис: потерянный Дуду быстро найден, поврежденный отремонтирован, недоступный изготовлен заново!", en: "An exceptional service: Lost Doudou - quickly found, damaged Doudou - repaired, unavailable Doudou - remade!" },
-  "story.2019": { ro: "Achizitia Mailou Tradition", ru: "Приобретение Mailou Tradition", en: "Mailou Tradition Acquisition" },
-  "story.2019Desc": { ro: "Grupul achizitioneaza unul dintre ultimele ateliere de fabricatie de plus din Franta, in Guerche-de-Bretagne.", ru: "Группа приобретает одну из последних мастерских по производству плюша во Франции, в Герш-де-Бретань.", en: "The group acquires one of the last plush manufacturing workshops in France, in Guerche-de-Bretagne." },
-  "story.2024": { ro: "25 de Ani de Tandrete", ru: "25 лет нежности", en: "25 Years of Tenderness" },
-  "story.2024Desc": { ro: "Celebram un sfert de secol de inovatie si tandrete, continuand sa aducem confort copiilor din intreaga lume.", ru: "Мы празднуем четверть века инноваций и нежности, продолжая дарить комфорт детям по всему миру.", en: "We celebrate a quarter century of innovation and tenderness, continuing to bring comfort to children around the world." },
+  "story.2015Desc": { ro: "Doudou et Compagnie se angajează alături de UNICEF, donând 1 euro pentru fiecare Doudou solidar achiziționat.", ru: "Doudou et Compagnie присоединяется к UNICEF, жертвуя 1 евро за каждый проданный солидарный Дуду.", en: "Doudou et Compagnie commits to UNICEF, donating 1 euro for each solidarity Doudou purchased." },
+  "story.2018": { ro: "Garanția Doudou", ru: "Гарантия Doudou", en: "Doudou Guarantee" },
+  "story.2018Desc": { ro: "Un serviciu excepțional: Doudou pierdut - găsit rapid, Doudou deteriorat - reparat, Doudou de negăsit - refabricat!", ru: "Исключительный сервис: потерянный Дуду быстро найден, поврежденный отремонтирован, недоступный изготовлен заново!", en: "An exceptional service: Lost Doudou - quickly found, damaged Doudou - repaired, unavailable Doudou - remade!" },
+  "story.2019": { ro: "Achiziția Maïlou Tradition", ru: "Приобретение Maïlou Tradition", en: "Maïlou Tradition Acquisition" },
+  "story.2019Desc": { ro: "Grupul achiziționează unul dintre ultimele ateliere de fabricație de pluș din Franța, în Guerche-de-Bretagne.", ru: "Группа приобретает одну из последних мастерских по производству плюша во Франции, в Герш-де-Бретань.", en: "The group acquires one of the last plush manufacturing workshops in France, in Guerche-de-Bretagne." },
+  "story.2024": { ro: "25 de Ani de Tandrețe", ru: "25 лет нежности", en: "25 Years of Tenderness" },
+  "story.2024Desc": { ro: "Celebrăm un sfert de secol de inovație și tandrețe, continuând să aducem confort copiilor din întreaga lume.", ru: "Мы празднуем четверть века инноваций и нежности, продолжая дарить комфорт детям по всему миру.", en: "We celebrate a quarter century of innovation and tenderness, continuing to bring comfort to children around the world." },
   
   // Help Page
   "help.title": { ro: "Ajutor", ru: "Помощь", en: "Help" },
