@@ -192,6 +192,32 @@ const ShopPage = () => {
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <Checkbox
+                    checked={selectedGender === "boy"}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedGender("boy");
+                      } else {
+                        setSelectedGender(null);
+                      }
+                    }}
+                  />
+                  <span className="text-sm text-muted-foreground">{t("catalog.forBoys")}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={selectedGender === "girl"}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedGender("girl");
+                      } else {
+                        setSelectedGender(null);
+                      }
+                    }}
+                  />
+                  <span className="text-sm text-muted-foreground">{t("catalog.forGirls")}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
                     checked={sortByAge}
                     onCheckedChange={(checked) => setSortByAge(checked === true)}
                   />
