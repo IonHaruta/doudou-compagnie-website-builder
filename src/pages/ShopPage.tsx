@@ -32,6 +32,20 @@ const ShopPage = () => {
     const colorParam = searchParams.get("color");
     const filterParam = searchParams.get("filter");
     const genderParam = searchParams.get("gender");
+    const resetParam = searchParams.get("reset");
+
+    // Reset all filters when "Toate Produsele" is clicked
+    if (resetParam === "true") {
+      setSelectedCollections([]);
+      setSelectedBudgets([]);
+      setSelectedAges([]);
+      setSelectedColors([]);
+      setShowSaleOnly(false);
+      setShowNewOnly(false);
+      setSelectedGender(null);
+      setSortByAge(false);
+      return;
+    }
 
     if (ageParam) setSelectedAges([ageParam]);
     if (collectionParam) setSelectedCollections([collectionParam]);
@@ -40,6 +54,10 @@ const ShopPage = () => {
     if (filterParam === "sale") setShowSaleOnly(true);
     if (filterParam === "new") setShowNewOnly(true);
     if (filterParam === "age") setSortByAge(true);
+    if (filterParam === "gender") {
+      // Toggle through: null -> boy -> girl -> null
+      setSelectedGender("boy");
+    }
     if (genderParam === "boy") setSelectedGender("boy");
     if (genderParam === "girl") setSelectedGender("girl");
   }, [searchParams]);
@@ -175,14 +193,26 @@ const ShopPage = () => {
                 <label className="flex items-center gap-2 cursor-pointer">
                   <Checkbox
                     checked={selectedGender === "boy"}
-                    onCheckedChange={(checked) => setSelectedGender(checked ? "boy" : null)}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedGender("boy");
+                      } else {
+                        setSelectedGender(null);
+                      }
+                    }}
                   />
                   <span className="text-sm text-muted-foreground">{t("catalog.forBoys")}</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <Checkbox
                     checked={selectedGender === "girl"}
-                    onCheckedChange={(checked) => setSelectedGender(checked ? "girl" : null)}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedGender("girl");
+                      } else {
+                        setSelectedGender(null);
+                      }
+                    }}
                   />
                   <span className="text-sm text-muted-foreground">{t("catalog.forGirls")}</span>
                 </label>

@@ -36,7 +36,7 @@ const Navbar = () => {
   const currentLang = languages.find(l => l.code === language) || languages[0];
 
   const catalogCategories = [
-    { name: t("catalog.all"), href: "/catalog" },
+    { name: t("catalog.all"), href: "/catalog?reset=true" },
     { name: t("catalog.new"), href: "/catalog?filter=new" },
     { name: t("catalog.byAge"), href: "/catalog?filter=age" },
     { name: t("catalog.byGender"), href: "/catalog?filter=gender" },
