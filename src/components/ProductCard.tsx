@@ -6,12 +6,13 @@ interface ProductCardProps {
   id: number;
   nameKey: string;
   price: number;
+  originalPrice?: number;
   image: string;
-  badge?: "bestseller" | "new";
+  badge?: "bestseller" | "new" | "sale";
   stock: "in-stock" | "limited" | "out-of-stock";
 }
 
-const ProductCard = ({ id, nameKey, price, image, badge, stock }: ProductCardProps) => {
+const ProductCard = ({ id, nameKey, price, originalPrice, image, badge, stock }: ProductCardProps) => {
   const { t } = useLanguage();
 
   const stockLabels = {
@@ -23,6 +24,7 @@ const ProductCard = ({ id, nameKey, price, image, badge, stock }: ProductCardPro
   const badgeLabels = {
     bestseller: { text: t("common.bestseller"), bg: "bg-primary" },
     new: { text: t("common.new"), bg: "bg-sage-green" },
+    sale: { text: t("common.sale"), bg: "bg-destructive" },
   };
 
   const name = t(nameKey);
@@ -54,9 +56,16 @@ const ProductCard = ({ id, nameKey, price, image, badge, stock }: ProductCardPro
           <h3 className="font-display text-lg font-medium text-foreground mb-2 line-clamp-1">
             {name}
           </h3>
-          <p className="text-lg font-semibold text-foreground mb-1">
-            €{price.toFixed(2)}
-          </p>
+          <div className="flex items-center gap-2 mb-1">
+            <p className="text-lg font-semibold text-foreground">
+              €{price.toFixed(2)}
+            </p>
+            {originalPrice && (
+              <p className="text-sm text-muted-foreground line-through">
+                €{originalPrice.toFixed(2)}
+              </p>
+            )}
+          </div>
           <p className={`text-sm ${stockLabels[stock].color}`}>
             {stockLabels[stock].text}
           </p>

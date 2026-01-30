@@ -183,8 +183,13 @@ const translations: Translations = {
   "common.home": { ro: "Acasă", ru: "Главная", en: "Home" },
   "common.new": { ro: "Nou", ru: "Новинка", en: "New" },
   "common.bestseller": { ro: "Cel mai vândut", ru: "Бестселлер", en: "Bestseller" },
+  "common.sale": { ro: "Reducere", ru: "Скидка", en: "Sale" },
   "common.productsFound": { ro: "produse găsite", ru: "товаров найдено", en: "products found" },
   "common.results": { ro: "produse", ru: "товаров", en: "products" },
+  
+  // Shop filters
+  "shop.collections": { ro: "Colecții", ru: "Коллекции", en: "Collections" },
+  "shop.saleOnly": { ro: "Doar Reduceri", ru: "Только скидки", en: "Sale Only" },
   
   // Why Choose Us
   "why.title": { ro: "De ce să ne alegi pe noi?", ru: "Почему выбирают нас?", en: "Why Choose Us?" },
