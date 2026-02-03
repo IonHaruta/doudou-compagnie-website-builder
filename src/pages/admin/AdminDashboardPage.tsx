@@ -23,15 +23,18 @@ function StatCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay }}
+      className="h-full"
     >
-      <Card>
+      <Card className="h-full">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
           <Icon className="h-5 w-5 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{value}</div>
-          {description && <p className="text-xs text-muted-foreground mt-1">{description}</p>}
+          <p className="text-xs text-muted-foreground mt-1 min-h-[1rem]">
+            {description || '\u00A0'}
+          </p>
         </CardContent>
       </Card>
     </motion.div>

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2, Search } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, Loader2, Search, Upload, X, ImageIcon } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -83,6 +83,42 @@ export default function AdminProductsPage() {
     categoryId: '',
   });
 
+  // Image upload state
+  const [uploadedImages, setUploadedImages] = useState<{ file: File; preview: string }[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newImages = Array.from(files).map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+    setUploadedImages((prev) => [...prev, ...newImages]);
+    
+    // Reset input to allow re-uploading same file
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setUploadedImages((prev) => {
+      const updated = [...prev];
+      URL.revokeObjectURL(updated[index].preview);
+      updated.splice(index, 1);
+      return updated;
+    });
+  };
+
+  // Cleanup object URLs on unmount
+  useEffect(() => {
+    return () => {
+      uploadedImages.forEach((img) => URL.revokeObjectURL(img.preview));
+    };
+  }, []);
+
   useEffect(() => {
     loadData();
   }, []);
@@ -115,6 +151,7 @@ export default function AdminProductsPage() {
       status: 'draft',
       categoryId: categories[0]?.id.toString() || '',
     });
+    setUploadedImages([]);
     setIsFormOpen(true);
   };
 
@@ -131,6 +168,9 @@ export default function AdminProductsPage() {
       status: product.status,
       categoryId: product.categoryId.toString(),
     });
+    // Note: Existing product images would be loaded from backend
+    // For now, reset uploaded images when editing
+    setUploadedImages([]);
     setIsFormOpen(true);
   };
 
@@ -447,9 +487,63 @@ export default function AdminProductsPage() {
 
               <div className="col-span-2">
                 <Label>Imagini produse</Label>
-                <div className="mt-2 border-2 border-dashed border-border rounded-lg p-6 text-center">
-                  <p className="text-muted-foreground text-sm">
-                    Încărcarea imaginilor va fi disponibilă când conectezi backend-ul Django.
+                <div className="mt-2 space-y-3">
+                  {/* Preview uploaded images */}
+                  {uploadedImages.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {uploadedImages.map((img, index) => (
+                        <div key={index} className="relative group">
+                          <img
+                            src={img.preview}
+                            alt={`Preview ${index + 1}`}
+                            className="w-20 h-20 rounded-lg object-cover border border-border"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeImage(index)}
+                            className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                          {index === 0 && (
+                            <span className="absolute bottom-1 left-1 bg-primary text-primary-foreground text-[10px] px-1 rounded">
+                              Principal
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Upload area */}
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="border-2 border-dashed border-border rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 hover:bg-muted/50 transition-colors"
+                  >
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="p-3 rounded-full bg-muted">
+                        <Upload className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">Click pentru a încărca imagini</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          PNG, JPG sau WEBP (max 5MB fiecare)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground">
+                    <ImageIcon className="h-3 w-3 inline mr-1" />
+                    Imaginile vor fi salvate când conectezi backend-ul Django. Prima imagine va fi cea principală.
                   </p>
                 </div>
               </div>
