@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect
+      // Redirects /repo/path to /repo/?/path so the SPA can handle it
+      var path = window.location.pathname;
+      var repo = "/doudou-compagnie-website-builder/";
+      if (path.startsWith(repo)) {
+        var newUrl =
+          window.location.origin +
+          repo +
+          "?/" +
+          path.slice(repo.length) +
+          window.location.search +
+          window.location.hash;
+        window.location.replace(newUrl);
+      } else {
+        window.location.replace(window.location.origin + repo);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
+
