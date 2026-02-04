@@ -31,7 +31,7 @@ const queryClient = new QueryClient();
 // Protected route wrapper for admin
 function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAdminAuth();
-  
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -39,11 +39,12 @@ function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
-  
+
   if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+    // IMPORTANT: relative redirect so it works with basename on GitHub Pages
+    return <Navigate to="login" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
@@ -56,7 +57,9 @@ const App = () => (
             <AdminAuthProvider>
               <Toaster />
               <Sonner />
-              <BrowserRouter>
+
+              {/* IMPORTANT: basename fixes routing under /doudou-compagnie-website-builder/ */}
+              <BrowserRouter basename={import.meta.env.BASE_URL}>
                 <Routes>
                   {/* Public routes */}
                   <Route path="/" element={<Index />} />
@@ -68,7 +71,7 @@ const App = () => (
                   <Route path="/idei-cadouri" element={<GiftIdeasPage />} />
                   <Route path="/povestea-noastra" element={<OurStoryPage />} />
                   <Route path="/ajutor" element={<HelpPage />} />
-                  
+
                   {/* Admin routes */}
                   <Route path="/admin/login" element={<AdminLoginPage />} />
                   <Route
@@ -85,7 +88,7 @@ const App = () => (
                     <Route path="orders" element={<AdminOrdersPage />} />
                     <Route path="coupons" element={<AdminCouponsPage />} />
                   </Route>
-                  
+
                   {/* Catch-all */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
