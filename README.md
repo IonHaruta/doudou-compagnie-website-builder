@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+# Doudou & Compagnie - E-commerce Website
 
-## Project info
+E-commerce website for Doudou & Compagnie - premium baby toys and doudous.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Project Structure
 
-## How can I edit this code?
+```
+.
+├── frontend/     # React + TypeScript + Vite frontend
+└── backend/      # Django REST API backend
+```
 
-There are several ways of editing your application.
+## Frontend (React)
 
-**Use Lovable**
+Built with:
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui components
+- React Router
+- Framer Motion
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Setup Frontend
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+cd frontend
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Frontend runs on `http://localhost:8080` (or port shown in terminal)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Backend (Django)
 
-**Use GitHub Codespaces**
+Built with:
+- Django 4.2+
+- Django REST Framework
+- PostgreSQL
+- Python 3.9+
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Setup Backend
 
-## What technologies are used for this project?
+See [backend/README.md](backend/README.md) for detailed instructions.
 
-This project is built with:
+Quick setup:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+cd backend
+./setup.sh  # or follow manual steps in backend/README.md
+```
 
-## How can I deploy this project?
+Backend runs on `http://localhost:8000`
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### API Endpoints
 
-## Can I connect a custom domain to my Lovable project?
+- `GET /api/catalog/products/` - List products (public)
+- `GET /api/catalog/categories/` - List categories (public)
+- `POST /api/orders/` - Create order (public, guest checkout)
 
-Yes, you can!
+Admin panel: `http://localhost:8000/admin/`
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Development Workflow
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+1. **Start Backend**: `cd backend && python manage.py runserver`
+2. **Start Frontend**: `cd frontend && npm run dev`
+3. **Access**: Frontend at `http://localhost:8080`, Backend at `http://localhost:8000`
+
+## Features
+
+### Frontend
+- Multi-language support (RO/RU/EN)
+- Dark/Light theme
+- Product catalog with filters
+- Shopping cart
+- Guest checkout
+- Responsive design
+
+### Backend
+- Django Admin for content management
+- REST API for frontend
+- Product catalog management
+- Order management
+- Guest checkout support
+- Stock management
+
+## Next Steps
+
+- Connect frontend to backend API
+- Add customer authentication
+- Implement payment integration
+- Add order tracking
+- Email notifications
