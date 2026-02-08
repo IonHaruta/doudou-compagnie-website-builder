@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, Heart, Minus, Plus, Truck, RefreshCw, Shield, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -8,18 +8,42 @@ import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { products } from "@/data/products";
+import { products as staticProducts } from "@/data/products";
+import type { Product } from "@/data/products";
+import { getCatalogProduct } from "@/services/catalogApi";
 import { useToast } from "@/hooks/use-toast";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const { t } = useLanguage();
   const { toast } = useToast();
 
-  const product = products.find((p) => p.id === Number(id));
-  
+  useEffect(() => {
+    const numId = Number(id);
+    const fromStatic = staticProducts.find((p) => p.id === numId);
+    if (fromStatic) {
+      setProduct(fromStatic);
+      setLoading(false);
+      return;
+    }
+    getCatalogProduct(numId)
+      .then((p) => p && setProduct(p as Product))
+      .catch(() => setProduct(null))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      </div>
+    );
+  }
+
   if (!product) {
     return (
       <div className="min-h-screen bg-background">
@@ -35,9 +59,9 @@ const ProductPage = () => {
     );
   }
 
-  const productName = t(product.nameKey);
+  const productName = product.name ?? t(product.nameKey);
 
-  const relatedProducts = products
+  const relatedProducts = staticProducts
     .filter((p) => p.collection === product.collection && p.id !== product.id)
     .slice(0, 4);
 

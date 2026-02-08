@@ -55,6 +55,12 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Admin panel – warm off-white, light grey sidebar, brown active nav */
+    --admin-page-bg: 30 40% 98%;
+    --admin-sidebar-bg: 0 0% 97%;
+    --admin-nav-active: 25 28% 42%;
+    --admin-input-bg: 30 25% 94%;
   }
 
   .dark {

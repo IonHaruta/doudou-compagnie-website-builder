@@ -4,7 +4,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProductCardProps {
   id: number;
-  nameKey: string;
+  nameKey?: string;
+  name?: string; // When from API, product name as plain text
   price: number;
   originalPrice?: number;
   image: string;
@@ -12,8 +13,9 @@ interface ProductCardProps {
   stock: "in-stock" | "limited" | "out-of-stock";
 }
 
-const ProductCard = ({ id, nameKey, price, originalPrice, image, badge, stock }: ProductCardProps) => {
+const ProductCard = ({ id, nameKey, name, price, originalPrice, image, badge, stock }: ProductCardProps) => {
   const { t } = useLanguage();
+  const displayName = name ?? (nameKey ? t(nameKey) : '');
 
   const stockLabels = {
     "in-stock": { text: t("product.inStock"), color: "text-sage-green" },
@@ -26,8 +28,6 @@ const ProductCard = ({ id, nameKey, price, originalPrice, image, badge, stock }:
     new: { text: t("common.new"), bg: "bg-sage-green" },
     sale: { text: t("common.sale"), bg: "bg-destructive" },
   };
-
-  const name = t(nameKey);
 
   return (
     <Link to={`/produs/${id}`}>
@@ -46,7 +46,7 @@ const ProductCard = ({ id, nameKey, price, originalPrice, image, badge, stock }:
           )}
           <img
             src={image}
-            alt={name}
+            alt={displayName}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
@@ -54,7 +54,7 @@ const ProductCard = ({ id, nameKey, price, originalPrice, image, badge, stock }:
         {/* Content */}
         <div className="p-5">
           <h3 className="font-display text-lg font-medium text-foreground mb-2 line-clamp-1">
-            {name}
+            {displayName}
           </h3>
           <div className="flex items-center gap-2 mb-1">
             <p className="text-lg font-semibold text-foreground">

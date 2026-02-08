@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'accounts',
     'catalog',
     'orders',
@@ -126,14 +127,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 AUTH_USER_MODEL = 'accounts.User'
 
-# CORS settings
+# CORS settings (frontend origin; base path does not matter for CORS)
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:8080',
+    'http://127.0.0.1:8080',
+    'http://127.0.0.1:5173',
 ]
 
 # REST Framework
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],

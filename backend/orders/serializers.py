@@ -18,11 +18,16 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
-    user_username = serializers.CharField(source='user.username', read_only=True)
+    user_username = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
         fields = ['id', 'user', 'user_username', 'guest_email', 'guest_name', 'status', 'total', 'items', 'created_at', 'updated_at']
+
+    def get_user_username(self, obj):
+        if obj.user:
+            return getattr(obj.user, 'email', None) or obj.user.username
+        return None
 
 
 class OrderCreateSerializer(serializers.Serializer):

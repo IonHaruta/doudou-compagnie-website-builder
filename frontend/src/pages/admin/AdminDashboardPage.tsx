@@ -25,13 +25,13 @@ function StatCard({
       transition={{ duration: 0.3, delay }}
       className="h-full"
     >
-      <Card className="h-full">
+      <Card className="h-full bg-card border border-border shadow-soft rounded-xl">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
           <Icon className="h-5 w-5 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{value}</div>
+          <div className="text-2xl font-bold text-foreground">{value}</div>
           <p className="text-xs text-muted-foreground mt-1 min-h-[1rem]">
             {description || '\u00A0'}
           </p>
@@ -60,12 +60,12 @@ function OrderStatusCard({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay }}
     >
-      <Card className="flex items-center gap-4 p-4">
-        <div className={`p-3 rounded-full ${color}`}>
-          <Icon className="h-5 w-5 text-primary-foreground" />
+      <Card className="flex items-center gap-4 p-4 bg-card border border-border shadow-soft rounded-xl">
+        <div className={`p-3 rounded-full ${color} shrink-0`}>
+          <Icon className="h-5 w-5 text-white" />
         </div>
         <div>
-          <p className="text-2xl font-bold">{count}</p>
+          <p className="text-2xl font-bold text-foreground">{count}</p>
           <p className="text-sm text-muted-foreground">{title}</p>
         </div>
       </Card>
@@ -104,7 +104,7 @@ export default function AdminDashboardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-display font-semibold text-foreground">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Bun venit în panoul de administrare</p>
+        <p className="text-muted-foreground mt-1 font-body">Bun venit în panoul de administrare</p>
       </div>
 
       {/* Main Stats */}
@@ -180,12 +180,12 @@ export default function AdminDashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.8 }}
       >
-        <Card>
+        <Card className="bg-card border border-border shadow-soft rounded-xl">
           <CardHeader>
-            <CardTitle className="text-lg">Acțiuni Rapide</CardTitle>
+            <CardTitle className="text-lg font-display font-semibold">Acțiuni Rapide</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-sm font-body">
               Folosește meniul din stânga pentru a naviga între secțiuni. Poți gestiona produse,
               categorii, comenzi și cupoane de reducere.
             </p>

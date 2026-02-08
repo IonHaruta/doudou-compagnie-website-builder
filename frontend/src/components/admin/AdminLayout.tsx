@@ -43,11 +43,11 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 flex">
+    <div className="min-h-screen bg-admin-page-bg flex">
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed left-0 top-0 z-40 h-screen bg-card border-r border-border transition-all duration-300',
+          'fixed left-0 top-0 z-40 h-screen bg-admin-sidebar-bg border-r border-border transition-all duration-300',
           sidebarOpen ? 'w-64' : 'w-16'
         )}
       >
@@ -79,8 +79,8 @@ export default function AdminLayout() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors',
                   active
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    ? 'bg-admin-nav-active text-white'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                 )}
               >
                 <item.icon className="h-5 w-5 flex-shrink-0" />
@@ -91,11 +91,11 @@ export default function AdminLayout() {
         </nav>
 
         {/* Footer */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-border">
+        <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-border bg-admin-sidebar-bg">
           {sidebarOpen && user && (
             <div className="mb-3 px-3 py-2 text-sm text-muted-foreground">
-              <p className="truncate">{user.email}</p>
-              <p className="text-xs">{user.role}</p>
+              <p className="truncate font-medium text-foreground/90">{user.email}</p>
+              <p className="text-xs uppercase tracking-wide">{user.role}</p>
             </div>
           )}
           <Button
@@ -127,7 +127,7 @@ export default function AdminLayout() {
       {/* Main Content */}
       <main
         className={cn(
-          'flex-1 transition-all duration-300',
+          'flex-1 transition-all duration-300 min-h-screen',
           sidebarOpen ? 'ml-64' : 'ml-16'
         )}
       >

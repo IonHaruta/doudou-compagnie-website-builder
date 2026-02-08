@@ -10,17 +10,19 @@ import productPuppy from "@/assets/product-puppy.jpg";
 
 export interface Product {
   id: number;
-  nameKey: string; // Translation key for name
-  descriptionKey: string; // Translation key for description
+  nameKey: string; // Translation key for name (empty when using name from API)
+  descriptionKey: string;
+  description?: string; // Plain text when from API
+  name?: string; // When from API, use this instead of t(nameKey)
   price: number;
-  originalPrice?: number; // Original price before discount
+  originalPrice?: number;
   image: string;
   badge?: "bestseller" | "new" | "sale";
   stock: "in-stock" | "limited" | "out-of-stock";
-  collection: string; // Collection category
+  collection: string;
   ageRange: string;
   color: string;
-  gender: "boy" | "girl" | "unisex"; // Target gender
+  gender: "boy" | "girl" | "unisex";
   reviews?: number;
   rating?: number;
 }

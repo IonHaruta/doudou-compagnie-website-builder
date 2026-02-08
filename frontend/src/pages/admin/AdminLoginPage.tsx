@@ -33,21 +33,23 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-admin-page-bg flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="w-full max-w-md"
       >
-        <Card className="shadow-card">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-display">Admin Panel</CardTitle>
-            <CardDescription>
+        <Card className="bg-card shadow-card rounded-xl border-0">
+          <CardHeader className="text-center space-y-1.5 pb-2">
+            <CardTitle className="text-2xl font-display font-semibold text-foreground">
+              Admin Panel
+            </CardTitle>
+            <CardDescription className="text-sm text-muted-foreground">
               Autentificare pentru administrarea magazinului
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-2">
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
                 <div className="flex items-center gap-2 p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
@@ -57,7 +59,7 @@ export default function AdminLoginPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-foreground">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -66,14 +68,14 @@ export default function AdminLoginPage() {
                     placeholder="admin@doudou.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 bg-admin-input-bg border-border rounded-lg"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Parolă</Label>
+                <Label htmlFor="password" className="text-foreground">Parolă</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -82,13 +84,13 @@ export default function AdminLoginPage() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 bg-admin-input-bg border-border rounded-lg"
                     required
                   />
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full rounded-lg bg-primary hover:bg-primary/90" disabled={isLoading}>
                 {isLoading ? 'Se autentifică...' : 'Autentificare'}
               </Button>
 

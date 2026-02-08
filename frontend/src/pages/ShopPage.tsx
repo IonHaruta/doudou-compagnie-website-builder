@@ -7,12 +7,16 @@ import ProductCard from "@/components/ProductCard";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Grid2X2, Grid3X3, LayoutGrid } from "lucide-react";
-import { products, collections, budgetRanges, ageRanges, colorOptions, ageRangeOrder } from "@/data/products";
+import { products as staticProducts, collections, budgetRanges, ageRanges, colorOptions, ageRangeOrder } from "@/data/products";
+import type { Product } from "@/data/products";
+import { getCatalogProducts } from "@/services/catalogApi";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ShopPage = () => {
   const [searchParams] = useSearchParams();
   const [gridSize, setGridSize] = useState<2 | 3 | 4>(3);
+  const [productsFromApi, setProductsFromApi] = useState<Product[] | null>(null);
+  const [catalogLoading, setCatalogLoading] = useState(true);
   const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
   const [selectedBudgets, setSelectedBudgets] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
@@ -23,6 +27,21 @@ const ShopPage = () => {
   const [sortByAge, setSortByAge] = useState(false);
   const [sortBy, setSortBy] = useState("newest");
   const { t } = useLanguage();
+
+  // Produse din baza de date când există; altfel afișăm produsele statice („false”)
+  useEffect(() => {
+    getCatalogProducts()
+      .then((list) => {
+        if (list.length > 0) {
+          setProductsFromApi(list as Product[]);
+        }
+        // dacă API returnează listă goală sau backend e oprit, rămânem pe staticProducts
+      })
+      .catch(() => setProductsFromApi(null))
+      .finally(() => setCatalogLoading(false));
+  }, []);
+
+  const products = productsFromApi !== null ? productsFromApi : staticProducts;
 
   // Apply filters from URL params (from GiftFinder or Collections)
   useEffect(() => {
@@ -142,7 +161,7 @@ const ShopPage = () => {
     }
 
     return result;
-  }, [selectedCollections, selectedBudgets, selectedAges, selectedColors, showSaleOnly, showNewOnly, selectedGender, sortByAge, sortBy]);
+  }, [products, selectedCollections, selectedBudgets, selectedAges, selectedColors, showSaleOnly, showNewOnly, selectedGender, sortByAge, sortBy]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -352,6 +371,7 @@ const ShopPage = () => {
                     <ProductCard
                       id={product.id}
                       nameKey={product.nameKey}
+                      name={product.name}
                       price={product.price}
                       originalPrice={product.originalPrice}
                       image={product.image}

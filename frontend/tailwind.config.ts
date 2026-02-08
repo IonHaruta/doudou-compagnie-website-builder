@@ -60,6 +60,12 @@ export default {
         "soft-pink": "hsl(var(--soft-pink))",
         "sage-green": "hsl(var(--sage-green))",
         terracotta: "hsl(var(--terracotta))",
+        admin: {
+          "page-bg": "hsl(var(--admin-page-bg))",
+          "sidebar-bg": "hsl(var(--admin-sidebar-bg))",
+          "nav-active": "hsl(var(--admin-nav-active))",
+          "input-bg": "hsl(var(--admin-input-bg))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

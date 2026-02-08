@@ -1,5 +1,4 @@
-// Mock API Service Layer for Admin Panel
-// Replace with actual REST API calls when Django backend is ready
+// Admin Panel API – login and dashboard use Django backend; rest can use mocks until wired
 
 import {
   AdminProduct,
@@ -16,11 +15,20 @@ import {
   ProductImage,
 } from '@/types/admin';
 
-// Simulated API delay
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Base URL for future Django API
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+// Django backend base URL (no trailing slash)
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api').replace(/\/$/, '');
+
+const ADMIN_TOKEN_KEY = 'admin_token';
+
+function getAuthHeaders(): HeadersInit {
+  const token = typeof localStorage !== 'undefined' ? localStorage.getItem(ADMIN_TOKEN_KEY) : null;
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Token ${token}` } : {}),
+  };
+}
 
 // ============ MOCK DATA ============
 
@@ -219,25 +227,21 @@ const mockCoupons: Coupon[] = [
 
 // ============ API FUNCTIONS ============
 
-// Dashboard
+// Dashboard – real API (Django)
 export async function fetchDashboardStats(): Promise<ApiResponse<DashboardStats>> {
-  await delay(300);
-  
-  const stats: DashboardStats = {
-    totalProducts: mockProducts.length,
-    activeProducts: mockProducts.filter(p => p.status === 'active').length,
-    totalOrders: mockOrders.length,
-    ordersByStatus: {
-      new: mockOrders.filter(o => o.status === 'new').length,
-      processing: mockOrders.filter(o => o.status === 'processing').length,
-      completed: mockOrders.filter(o => o.status === 'completed').length,
-      cancelled: mockOrders.filter(o => o.status === 'cancelled').length,
-    },
-    totalRevenue: mockOrders.filter(o => o.status === 'completed').reduce((sum, o) => sum + o.total, 0),
-    totalCategories: mockCategories.length,
-  };
-
-  return { data: stats, success: true };
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/dashboard-stats/`, {
+      method: 'GET',
+      headers: getAuthHeaders(),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return { data: null as any, success: false, message: data.detail || 'Failed to load dashboard' };
+    }
+    return { data: data as DashboardStats, success: true };
+  } catch (e) {
+    return { data: null as any, success: false, message: 'Network error. Is the backend running on port 8000?' };
+  }
 }
 
 // Products
@@ -345,29 +349,99 @@ export async function deleteCategory(id: number): Promise<ApiResponse<null>> {
   return { data: null, success: true, message: 'Category deleted successfully' };
 }
 
-// Orders
+// Map backend status (PENDING, etc.) to frontend (new, etc.)
+const backendToFrontendStatus: Record<string, OrderStatus> = {
+  PENDING: 'new',
+  PROCESSING: 'processing',
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled',
+};
+const frontendToBackendStatus: Record<OrderStatus, string> = {
+  new: 'PENDING',
+  processing: 'PROCESSING',
+  completed: 'COMPLETED',
+  cancelled: 'CANCELLED',
+};
+
+function mapBackendOrderToFrontend(backend: any): Order {
+  const parts = (backend.guest_name || backend.user_username || '').trim().split(/\s+/);
+  const firstName = parts[0] || '';
+  const lastName = parts.slice(1).join(' ') || (backend.guest_email ? '-' : '-');
+  return {
+    id: backend.id,
+    orderNumber: `ORD-${new Date(backend.created_at).getFullYear()}-${String(backend.id).padStart(3, '0')}`,
+    customer: {
+      id: backend.user || 0,
+      firstName,
+      lastName,
+      email: backend.guest_email || backend.user_username || '',
+      address: '',
+      city: '',
+      postalCode: '',
+      country: '',
+    },
+    items: (backend.items || []).map((item: any) => ({
+      id: item.id,
+      productId: item.product,
+      productName: item.product_name || '',
+      productImage: '',
+      quantity: item.quantity,
+      unitPrice: Number(item.price_at_purchase),
+      totalPrice: Number(item.total ?? item.quantity * item.price_at_purchase),
+    })),
+    subtotal: Number(backend.total),
+    discount: 0,
+    total: Number(backend.total),
+    status: backendToFrontendStatus[backend.status] ?? 'new',
+    createdAt: backend.created_at,
+    updatedAt: backend.updated_at,
+  };
+}
+
+// Orders – real API (Django)
 export async function fetchOrders(): Promise<ApiResponse<Order[]>> {
-  await delay(300);
-  return { data: mockOrders, success: true };
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders/`, { headers: getAuthHeaders() });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return { data: [], success: false, message: data.detail || 'Failed to load orders' };
+    }
+    const list = Array.isArray(data) ? data : data.results || [];
+    return { data: list.map(mapBackendOrderToFrontend), success: true };
+  } catch (e) {
+    return { data: [], success: false, message: 'Network error loading orders' };
+  }
 }
 
 export async function fetchOrder(id: number): Promise<ApiResponse<Order>> {
-  await delay(200);
-  const order = mockOrders.find(o => o.id === id);
-  if (!order) {
-    return { data: null as any, success: false, message: 'Order not found' };
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders/${id}/`, { headers: getAuthHeaders() });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return { data: null as any, success: false, message: data.detail || 'Order not found' };
+    }
+    return { data: mapBackendOrderToFrontend(data), success: true };
+  } catch (e) {
+    return { data: null as any, success: false, message: 'Network error' };
   }
-  return { data: order, success: true };
 }
 
 export async function updateOrderStatus(id: number, status: OrderStatus): Promise<ApiResponse<Order>> {
-  await delay(300);
-  const index = mockOrders.findIndex(o => o.id === id);
-  if (index === -1) {
-    return { data: null as any, success: false, message: 'Order not found' };
+  try {
+    const backendStatus = frontendToBackendStatus[status];
+    const res = await fetch(`${API_BASE_URL}/orders/${id}/`, {
+      method: 'PATCH',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ status: backendStatus }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return { data: null as any, success: false, message: data.detail || 'Update failed' };
+    }
+    return { data: mapBackendOrderToFrontend(data), success: true, message: 'Order status updated successfully' };
+  } catch (e) {
+    return { data: null as any, success: false, message: 'Network error' };
   }
-  mockOrders[index] = { ...mockOrders[index], status, updatedAt: new Date().toISOString() };
-  return { data: mockOrders[index], success: true, message: 'Order status updated successfully' };
 }
 
 // Coupons
@@ -413,20 +487,23 @@ export async function deleteCoupon(id: number): Promise<ApiResponse<null>> {
   return { data: null, success: true, message: 'Coupon deleted successfully' };
 }
 
-// Auth (mock - will be replaced with Django auth)
+// Auth – real API (Django)
 export async function adminLogin(email: string, password: string): Promise<ApiResponse<{ token: string; user: { email: string; role: string } }>> {
-  await delay(500);
-  // Mock admin credentials
-  if (email === 'admin@doudou.com' && password === 'admin123') {
-    return {
-      data: {
-        token: 'mock-jwt-token-12345',
-        user: { email, role: 'ADMIN' },
-      },
-      success: true,
-    };
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/login/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const message = data.detail || (res.status === 401 ? 'Invalid email or password' : 'Login failed');
+      return { data: null as any, success: false, message };
+    }
+    return { data: { token: data.token, user: data.user }, success: true };
+  } catch (e) {
+    return { data: null as any, success: false, message: 'Network error. Is the backend running on port 8000?' };
   }
-  return { data: null as any, success: false, message: 'Invalid email or password' };
 }
 
 export async function adminLogout(): Promise<ApiResponse<null>> {
