@@ -1,0 +1,43 @@
+# .dockerignore pentru backend
+# Exclude doar ce nu este necesar pentru build
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment files (nu le copiem în image)
+.env
+.env.local
+.env.production
+
+# Database
+*.sqlite3
+*.db
+
+# Logs
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Documentation (opțional - poți include dacă vrei)
+# *.md
+
+# Test files (opțional)
+# test_*.py
+# *_test.py
