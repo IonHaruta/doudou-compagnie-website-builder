@@ -9,11 +9,35 @@
     <meta property="og:title" content="Doudou Compagnie" />
     <meta property="og:description" content="Doudou Compagnie — product catalog, collections and gift ideas." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ionharuta.github.io/doudou-compagnie-website-builder/" />
+    <meta property="og:site_name" content="Doudou Compagnie" />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Doudou Compagnie" />
     <meta name="twitter:description" content="Doudou Compagnie — product catalog, collections and gift ideas." />
     <script>
+      // Redirect social media crawlers to versioned URL for cache refresh
+      (function() {
+        var ua = navigator.userAgent.toLowerCase();
+        var isSocialCrawler = 
+          ua.includes('facebookexternalhit') ||
+          ua.includes('twitterbot') ||
+          ua.includes('linkedinbot') ||
+          ua.includes('whatsapp') ||
+          ua.includes('telegrambot') ||
+          ua.includes('applebot') ||
+          ua.includes('slackbot') ||
+          ua.includes('discordbot');
+        
+        var l = window.location;
+        // Redirect crawlers to versioned URL if not already there
+        if (isSocialCrawler && !l.search.includes('v=')) {
+          var newUrl = l.href + (l.search ? '&' : '?') + 'v=2';
+          window.location.replace(newUrl);
+          return;
+        }
+      })();
+      
       // Single Page Apps for GitHub Pages
       // https://github.com/rafgraph/spa-github-pages
       // This script takes the current url and converts the path and query
