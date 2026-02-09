@@ -17,8 +17,15 @@ import {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+// Detect if we're on GitHub Pages (HTTPS) - if so, skip backend requests
+const isGitHubPages = typeof window !== 'undefined' && 
+  (window.location.hostname.includes('github.io') || window.location.protocol === 'https:');
+
 // Django backend base URL (no trailing slash)
-const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api').replace(/\/$/, '');
+// On GitHub Pages, use empty string to force mock data fallback
+const API_BASE_URL = isGitHubPages 
+  ? '' 
+  : (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api').replace(/\/$/, '');
 
 const ADMIN_TOKEN_KEY = 'admin_token';
 
@@ -228,19 +235,30 @@ const mockCoupons: Coupon[] = [
 // Mock dashboard stats (fallback when backend is unavailable)
 const mockDashboardStats: DashboardStats = {
   totalProducts: mockProducts.length,
+  activeProducts: mockProducts.filter(p => p.status === 'active').length,
   totalOrders: mockOrders.length,
-  totalRevenue: mockOrders.reduce((sum, o) => sum + o.total, 0),
-  activeCategories: mockCategories.length,
-  pendingOrders: mockOrders.filter(o => o.status === 'new').length,
-  completedOrders: mockOrders.filter(o => o.status === 'completed').length,
+  ordersByStatus: {
+    new: mockOrders.filter(o => o.status === 'new').length,
+    processing: mockOrders.filter(o => o.status === 'processing').length,
+    completed: mockOrders.filter(o => o.status === 'completed').length,
+    cancelled: mockOrders.filter(o => o.status === 'cancelled').length,
+  },
+  totalRevenue: mockOrders.filter(o => o.status === 'completed').reduce((sum, o) => sum + o.total, 0),
+  totalCategories: mockCategories.length,
 };
 
 // ============ API FUNCTIONS ============
 
 // Dashboard – real API (Django) with mock fallback
 export async function fetchDashboardStats(): Promise<ApiResponse<DashboardStats>> {
+  // On GitHub Pages, use mock data directly (no backend available)
+  if (!API_BASE_URL || isGitHubPages) {
+    console.log('Using mock dashboard data (GitHub Pages or no backend URL)');
+    return { data: mockDashboardStats, success: true };
+  }
+
   try {
-    // Add timeout for faster fallback on GitHub Pages
+    // Add timeout for faster fallback
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
     
@@ -421,6 +439,12 @@ function mapBackendOrderToFrontend(backend: any): Order {
 
 // Orders – real API (Django) with mock fallback
 export async function fetchOrders(): Promise<ApiResponse<Order[]>> {
+  // On GitHub Pages, use mock data directly (no backend available)
+  if (!API_BASE_URL || isGitHubPages) {
+    console.log('Using mock orders data (GitHub Pages or no backend URL)');
+    return { data: mockOrders, success: true };
+  }
+
   try {
     const res = await fetch(`${API_BASE_URL}/orders/`, { headers: getAuthHeaders() });
     const data = await res.json().catch(() => ({}));
@@ -439,6 +463,16 @@ export async function fetchOrders(): Promise<ApiResponse<Order[]>> {
 }
 
 export async function fetchOrder(id: number): Promise<ApiResponse<Order>> {
+  // On GitHub Pages, use mock data directly (no backend available)
+  if (!API_BASE_URL || isGitHubPages) {
+    const mockOrder = mockOrders.find(o => o.id === id);
+    if (mockOrder) {
+      console.log('Using mock order data (GitHub Pages or no backend URL)');
+      return { data: mockOrder, success: true };
+    }
+    return { data: null as any, success: false, message: 'Order not found' };
+  }
+
   try {
     const res = await fetch(`${API_BASE_URL}/orders/${id}/`, { headers: getAuthHeaders() });
     const data = await res.json().catch(() => ({}));
@@ -526,6 +560,21 @@ export async function deleteCoupon(id: number): Promise<ApiResponse<null>> {
 
 // Auth – real API (Django) with mock fallback for demo
 export async function adminLogin(email: string, password: string): Promise<ApiResponse<{ token: string; user: { email: string; role: string } }>> {
+  // On GitHub Pages, use mock login directly (no backend available)
+  if (!API_BASE_URL || isGitHubPages) {
+    if (email === 'admin@doudou.com' && password === 'admin123') {
+      console.log('Using mock login (GitHub Pages or no backend URL)');
+      return {
+        data: {
+          token: 'mock-token-demo-' + Date.now(),
+          user: { email: 'admin@doudou.com', role: 'ADMIN' },
+        },
+        success: true,
+      };
+    }
+    return { data: null as any, success: false, message: 'Invalid email or password' };
+  }
+
   try {
     const res = await fetch(`${API_BASE_URL}/auth/login/`, {
       method: 'POST',
