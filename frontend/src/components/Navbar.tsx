@@ -180,20 +180,6 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* User / Admin */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="hidden md:flex text-muted-foreground hover:text-foreground">
-                    <User className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => navigate('/admin')}>
-                    Admin Panel
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
               {/* Cart */}
               <Link to="/cos">
                 <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
