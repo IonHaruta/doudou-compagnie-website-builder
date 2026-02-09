@@ -27,6 +27,30 @@
 
   <body>
     <div id="root"></div>
+    <!-- Redirect social media crawlers to force cache refresh -->
+    <script>
+      // Detect social media crawlers and redirect to versioned URL to force cache refresh
+      (function() {
+        var ua = navigator.userAgent.toLowerCase();
+        var isSocialCrawler = 
+          ua.includes('facebookexternalhit') ||
+          ua.includes('twitterbot') ||
+          ua.includes('linkedinbot') ||
+          ua.includes('whatsapp') ||
+          ua.includes('telegrambot') ||
+          ua.includes('applebot') ||
+          ua.includes('slackbot') ||
+          ua.includes('discordbot');
+        
+        var l = window.location;
+        // Only redirect if no version parameter exists and it's a crawler
+        if (isSocialCrawler && !l.search.includes('v=')) {
+          var newUrl = l.href + (l.search ? '&' : '?') + 'v=2';
+          window.location.replace(newUrl);
+          return;
+        }
+      })();
+    </script>
     <!-- Redirect for GitHub Pages SPA routing -->
     <script>
       // Single Page Apps for GitHub Pages
