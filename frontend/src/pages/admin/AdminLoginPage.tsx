@@ -24,7 +24,8 @@ export default function AdminLoginPage() {
     const result = await login(email, password);
 
     if (result.success) {
-      navigate('/admin');
+      // Use replace to avoid adding to history and ensure proper routing on GitHub Pages
+      navigate('/admin', { replace: true });
     } else {
       setError(result.message || 'Login failed');
     }

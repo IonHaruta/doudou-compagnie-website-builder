@@ -240,10 +240,17 @@ const mockDashboardStats: DashboardStats = {
 // Dashboard – real API (Django) with mock fallback
 export async function fetchDashboardStats(): Promise<ApiResponse<DashboardStats>> {
   try {
+    // Add timeout for faster fallback on GitHub Pages
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+    
     const res = await fetch(`${API_BASE_URL}/auth/dashboard-stats/`, {
       method: 'GET',
       headers: getAuthHeaders(),
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
+    
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
       // Fallback to mock data if backend fails
@@ -252,7 +259,7 @@ export async function fetchDashboardStats(): Promise<ApiResponse<DashboardStats>
     }
     return { data: data as DashboardStats, success: true };
   } catch (e) {
-    // Fallback to mock data if network error
+    // Fallback to mock data if network error or timeout
     console.warn('Backend unavailable, using mock dashboard data');
     return { data: mockDashboardStats, success: true };
   }
